@@ -1,9 +1,7 @@
 import { LocationOnOutlined } from '@mui/icons-material'
 import { Box, Button, InputLabel, TextField, Typography } from '@mui/material'
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { makeStyles } from 'tss-react/mui'
 import FormWithtelp from 'Common/reusableComponent/FormWithTelp'
+import { Link } from 'react-router-dom'
 import useStyles from './Style'
 
 

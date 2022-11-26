@@ -4,11 +4,6 @@ import FormRegistration from './Components/FormRegistration'
 import useStyles from './Style'
 
 
-
-
-
-
-
 const SignIn = () => {
   const {classes} = useStyles()
   return (

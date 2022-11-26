@@ -4,8 +4,8 @@ import { StateValueContext } from 'Common/ContextApi'
 import DrawerFunc from 'Common/reusableComponent/DrawerFunc'
 import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { userTypeProfile } from '..'
 import useStyles from '../Style'
+import { userTypeProfile } from '../Utils/Interfaces'
 type Props = {
 
   data : userTypeProfile | undefined,

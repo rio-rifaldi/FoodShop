@@ -1,6 +1,6 @@
 import { Avatar, IconButton, Skeleton, skeletonClasses, Tooltip } from '@mui/material'
 import avatar from 'assets/images/svg/blank-profile-picture.svg'
-import { userTypeProfile } from 'Common/reusableComponent/Header'
+import { userTypeProfile } from 'Common/reusableComponent/Header/Utils/Interfaces'
 import { MouseEvent, useState } from 'react'
 import MenuListAccount from './MenuListAccount'
 type Props = {

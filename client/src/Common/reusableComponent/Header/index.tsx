@@ -7,32 +7,10 @@ import { useContext, useLayoutEffect } from 'react'
 import Dekstop from './components/Dekstop'
 import Mobile from './components/Mobile'
 import useStyles from './Style'
+import { getUserProfileQuery } from './Utils/Graphql'
+import { userTypeProfile } from './Utils/Interfaces'
 
-const getUserProfileQuery = gql`
-  query getUser{
-    getUser{
-     firstName 
-      lastName
-       email 
-      profileImage {
-                url
-                secureUrl
-            }
-    }
-  }
-`
-export interface userTypeProfile{
-      getUser:{
-    firstName : string,
-    lastName : string,
-    email : string,
-    profileImage:{
-      url : string,
-      secureUrl : string
-    }
-  }
 
-}
 
 function Header() {
     const theme = useTheme();
