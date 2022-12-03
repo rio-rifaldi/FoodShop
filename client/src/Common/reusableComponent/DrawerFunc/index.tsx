@@ -1,26 +1,26 @@
 import { Add, Delete, Fastfood, Home, Login, Logout, MenuBook, PermPhoneMsg } from '@mui/icons-material';
-import { Avatar, Box, Button, IconButton, List, ListItem, ListItemButton, ListItemText, Skeleton, Stack, Typography, useTheme } from '@mui/material';
+import { Avatar, Box, Button, IconButton, List, MenuItem, ListItemButton, ListItemText, Skeleton, Stack, Typography } from '@mui/material';
 import { Dispatch, memo, SetStateAction, useContext } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { makeStyles } from 'tss-react/mui';
 import avatar from 'assets/images/svg/blank-profile-picture.svg';
 import logo from 'assets/images/svg/Logo.svg';
 import { StateValueContext } from '../../ContextApi';
 import useStyles from './Style';
 import { userTypeProfile } from '../Header/Utils/Interfaces';
+import { isLogined } from 'SetUp/StateManagement/Store';
+import { useRecoilValue } from 'recoil';
 
 
 type Props = { 
-  setIsOpen : React.Dispatch<React.SetStateAction<boolean>>,
-  data : userTypeProfile | undefined,
-  loading : boolean
+  data ?: userTypeProfile | undefined,
+  loading ?: boolean
 }
 
-function DrawerFunc({setIsOpen,data,loading}:Props) {
+function DrawerFunc({data,loading}:Props) {
 
-  const {classes} = useStyles();
-  const theme = useTheme();
-  const {state} = useContext(StateValueContext)
+  const {classes,theme} = useStyles();
+  const isLogin = useRecoilValue(isLogined)
   const isActiveLink = ({isActive}:any) =>{
     return {
       color : isActive ? theme.palette.myColor.green : theme.palette.neutrals.black
@@ -32,15 +32,15 @@ function DrawerFunc({setIsOpen,data,loading}:Props) {
        <List  > 
         <Box className={classes.boxLogo}>   
           <img src={logo} alt="logo"  className={classes.logo} style={{marginLeft:".9rem"}}/>
-            <IconButton onClick={() => setIsOpen(false)}  > 
+            <IconButton   > 
                 < Logout />
             </IconButton >
          </Box>
 
           {
-            state.isLogined ?(
+            isLogin ?(
             <Box sx={{margin:"1rem 0"}}> 
-                      <Link to='/profile' style={{margin:"0 auto",width:"max-content",borderRadius:"4rem",display:"block"}} onClick={() => setIsOpen(false)} tabIndex={-1}> 
+                      <Link to='/profile' style={{margin:"0 auto",width:"max-content",borderRadius:"4rem",display:"block"}}  tabIndex={-1}> 
                           <IconButton  > 
                             
                           {
@@ -56,8 +56,6 @@ function DrawerFunc({setIsOpen,data,loading}:Props) {
                   
                 )
               }
-
-
                           </IconButton> 
                         </Link>
 
@@ -92,41 +90,41 @@ function DrawerFunc({setIsOpen,data,loading}:Props) {
             )
           }
 
-               <NavLink to="home" style={isActiveLink} className={classes.navLink} tabIndex={-1}  onClick={() => setIsOpen(false)}>
-                    <ListItem disablePadding  >
+               <NavLink to="home" style={isActiveLink} className={classes.navLink} tabIndex={-1}   >
+                    <MenuItem >
                             <ListItemButton  > 
                                 < Home />
                                 < ListItemText primary={"Home"} className={classes.listItemText} />
                             </ListItemButton>
-                    </ListItem>
+                    </MenuItem>
                </NavLink> 
 
-          <NavLink to="menu"style={isActiveLink} className={classes.navLink} tabIndex={-1} onClick={() => setIsOpen(false)} >
-              <ListItem disablePadding  >
-                      <ListItemButton  > 
+          <NavLink to="menu"style={isActiveLink} className={classes.navLink} tabIndex={-1}  >
+              <MenuItem  >
+                      <ListItemButton   > 
                           < Fastfood />
                           < ListItemText primary={"Menu"} className={classes.listItemText} />
                       </ListItemButton>
-              </ListItem>
+              </MenuItem>
              </NavLink>
 
-          <ListItem disablePadding  onClick={() => setIsOpen(false)} >
+          <MenuItem   >
                 <NavLink to="blog" style={isActiveLink}  className={classes.navLink} tabIndex={-1}>
                     <ListItemButton  > 
                         < MenuBook />
                         < ListItemText primary={"Blog"} className={classes.listItemText} />
                     </ListItemButton>
                 </NavLink> 
-          </ListItem>
+          </MenuItem>
 
-          <ListItem disablePadding  onClick={() => setIsOpen(false)} >
-                <NavLink  to="contact" style={isActiveLink} className={classes.navLink} tabIndex={-1}>
+        <MenuItem    >
+                <NavLink to="contact" style={isActiveLink} className={classes.navLink} tabIndex={-1}>
                     <ListItemButton  > 
                         < PermPhoneMsg />
                         < ListItemText primary={"Contact"} className={classes.listItemText} />
                     </ListItemButton>
                 </NavLink>
-          </ListItem>
+          </MenuItem>
 
         </List> 
        </Box>

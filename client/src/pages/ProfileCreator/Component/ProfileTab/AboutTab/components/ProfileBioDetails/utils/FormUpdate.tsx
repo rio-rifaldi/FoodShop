@@ -1,7 +1,6 @@
-import { ApolloQueryResult, gql, OperationVariables, useMutation } from '@apollo/client'
+import { gql, useMutation } from '@apollo/client'
 import { CalendarMonth, Call, Flag, Work } from '@mui/icons-material'
 import { Box, Button, InputLabel, Stack, TextField } from '@mui/material'
-import { userType } from 'pages/ProfileCreator/Component/ProfileBio'
 import { BioDetail } from 'pages/ProfileCreator/Component/ProfileBio/utils/FormAddMoreBio'
 import { useForm } from 'react-hook-form'
 import { useRecoilValue } from 'recoil'

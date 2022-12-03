@@ -11,6 +11,7 @@ import { CssBaseline } from '@mui/material';
 import { StateValueProvider } from 'Common/ContextApi';
 import { ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
 import {createUploadLink} from 'apollo-upload-client'
+import { RecoilRoot } from 'recoil';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -31,15 +32,16 @@ const client = new ApolloClient({
 root.render(
 
   // <React.StrictMode>
+
   <ApolloProvider client={client}>  
-      <StateValueProvider > 
+    <RecoilRoot>
             <CacheProvider value={MuiCache} >  
               <ThemeProvider theme={theme} >  
               <  CssBaseline />
                     <App />
               </ThemeProvider> 
             </CacheProvider>
-      </StateValueProvider>
+      </RecoilRoot>
    </ApolloProvider>
   /* </React.StrictMode> */
 );

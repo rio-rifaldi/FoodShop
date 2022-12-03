@@ -1,48 +1,29 @@
-import {  Grid } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import SimpleCard from 'Common/reusableComponent/SimpleCard'
-import topoki from 'assets/images/svg/Tokpokki.svg'
-import { makeStyles } from 'tss-react/mui'
+import useFetchProduct from 'pages/Menu/utils/Graphql/Hooks/useFetchProduct'
 import useStyles from './Style'
 
 
 function MenuList() {
     const {classes}  = useStyles()
+    const {data,loading} = useFetchProduct()
+    const products = data?.GetAllProduct
   return (
-                                            
-        <Grid container className={classes.container}> 
-            <Grid item >  
-                < SimpleCard image={topoki} alt='topoki' name={'Topoki dffd fdfdf fdfdfdsssssssss'} labelRating={297} price={20.4} rating={3.5} />
+        <Box my={6}>                                    
+            <Grid container className={classes.container} > 
+            {
+                products && products.map((product) =>{
+                    return(
+
+                <Grid item >  
+                    < SimpleCard image={product.image[0].url} alt={product.name} name={product.name} labelRating={297} price={product.price} rating={3.5} id={product._id}/>
+                </Grid>
+
+                    )
+                } )
+            }
             </Grid>
-            <Grid item  >   
-                < SimpleCard image={topoki} alt='topoki' name={'Topoki'} labelRating={297} price={20.4} rating={3.5} />
-            </Grid>
-            <Grid item  >  
-                < SimpleCard image={topoki} alt='topoki' name={'Topoki'} labelRating={297} price={20.4} rating={3.5} />
-            </Grid>
-            <Grid item  >  
-                < SimpleCard image={topoki} alt='topoki' name={'Topoki'} labelRating={297} price={20.4} rating={3.5} />
-            </Grid>
-            <Grid item  >  
-                < SimpleCard image={topoki} alt='topoki' name={'Topoki'} labelRating={297} price={20.4} rating={3.5} />
-            </Grid>
-            <Grid item  >  
-                < SimpleCard image={topoki} alt='topoki' name={'Topoki'} labelRating={297} price={20.4} rating={3.5} />
-            </Grid>
-            <Grid item  >  
-                < SimpleCard image={topoki} alt='topoki' name={'Topoki'} labelRating={297} price={20.4} rating={3.5} />
-            </Grid>
-            <Grid item  >  
-                < SimpleCard image={topoki} alt='topoki' name={'Topoki'} labelRating={297} price={20.4} rating={3.5} />
-            </Grid>
-            <Grid item  >  
-                < SimpleCard image={topoki} alt='topoki' name={'Topoki'} labelRating={297} price={20.4} rating={3.5} />
-            </Grid>
-            <Grid item  >  
-                < SimpleCard image={topoki} alt='topoki' name={'Topoki'} labelRating={297} price={20.4} rating={3.5} />
-            </Grid>
-           
-        
-        </Grid>
+        </Box>   
    
   )
 }

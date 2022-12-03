@@ -1,19 +1,24 @@
 import { Card, CardActionArea, CardActions, CardContent, CardMedia, Chip, Typography } from '@mui/material';
 import cherry from 'assets/images/svg/cherry.svg';
-import { useLayoutEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRef } from 'react';
 import useStyles from './Style';
 import useOnPoint from './Utils/Hooks/useOnPoint';
 
 
 type Props = {
-    small ?: boolean 
+    small ?: boolean,
+    publishedAt : string | null
+    title : string,
+    content : string | null,
+    urlToImage : string | null,
+    url : string
 }
+
 
 function FlexCardVerySmall(props:Props) {
     const {classes} = useStyles();  
     const cardPoint = useRef<HTMLDivElement>(null)
-    const navigate = useNavigate()
+
     const {setIsPoint} = useOnPoint(cardPoint)
     let small = props.small
 
@@ -25,29 +30,43 @@ function FlexCardVerySmall(props:Props) {
             onMouseUp: () => setIsPoint(current => !current),
             onMouseDown: () => setIsPoint(current => !current),
             className :classes.cardActionArea,
-            onClick :() => navigate('/detail'),
+        }
+        const minimizeContent = (content:string | null,size:number) =>{
+            if(!content) return
+            if(content?.length >  size){
+                const trivia = `${content.slice(1,size)} ...`
+                return trivia
+            }else{
+                return content
+            }
+        } 
+        const getCurrentTime = (time:string | null) => {
+            if(!time) return
+            const date = new Date(time);
+            
+            return date.toLocaleString()
         }
 
   return (
     
             <Card className={classes.card} ref={cardPoint}  > 
-                <CardActionArea {...cardProps} > 
+                <CardActionArea {...cardProps} href={props.url} target="_blank"> 
                     < CardMedia 
                         component='img'
-                        src={cherry}
+                        src={props.urlToImage ? props.urlToImage : cherry}
                         className={classes.cardMedia}
                         sx={small ? {width :"4rem !important", transform:"translateY(.5rem) !important"} : undefined}
                  
                     />
                     <CardContent sx={{maxWidth :"26rem"}} > 
-                    <Typography component={'li'} className={classes.typographyDate}> Jun 20, 2022 </Typography>
+                    <Typography component={'li'} className={classes.typographyDate}> {getCurrentTime(props.publishedAt)} </Typography>
                         <Typography component={'h1'} className={classes.typographyHead} > 
-                        Healthy Food Choices for Your Family
+                        {minimizeContent(props.content,50)}
                         </Typography>
                         {
                             !small &&(
                         <Typography className={classes.typographyPara} > 
-                            How can you ensure that your child is well nourished?...
+                          {minimizeContent(props.content,30)}
                             </Typography>
                             )
                         }

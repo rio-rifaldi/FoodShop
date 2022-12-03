@@ -1,86 +1,32 @@
-import { ApolloQueryResult, gql, OperationVariables, useMutation } from '@apollo/client'
 import { Close, DeleteForever, Edit, PhotoCamera } from '@mui/icons-material'
-import { Dialog, DialogContent, DialogContentText, DialogTitle, Fab, IconButton, Stack } from '@mui/material'
-import React, { ChangeEvent } from 'react'
+import { CircularProgress, Dialog, DialogContent, DialogContentText, DialogTitle, Fab, IconButton, Stack } from '@mui/material'
+import useAddImageProfile from 'pages/ProfileCreator/Utils/Hooks/useAddImageProfile'
+import useDeleteImageProfile from 'pages/ProfileCreator/Utils/Hooks/useDeleteImageProfile'
+import useUpdateImageProfile from 'pages/ProfileCreator/Utils/Hooks/useUpdateImageProfile'
+import React from 'react'
 import { useRecoilValue } from 'recoil'
 import { refetchState } from 'SetUp/StateManagement/Store'
-import { userType } from '..'
 
 type Props = {
     open:boolean,
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-
-const QueryImageAdd = gql`
-    mutation addImageProfile($file: Upload!){
-    addImageProfile(file: $file) {
-        secureUrl
-        url
-    }
-}
-`
-const QueryImageDelete = gql`
-    mutation deleteImageProfile{
-    deleteImageProfile
-    }
-`
-const QueryImageUpdate = gql`
-    mutation updateImageProfile($file: Upload!){
-    updateImageProfile(file: $file) {
-        url
-        secureUrl
-    }
-}
-`
-
 const DialogSetImageProfile = (props: Props) => {
     
-    const dataUser= useRecoilValue(refetchState)
-    
-        let data = dataUser?.data
-    const onSelectFileAdd = async (e:ChangeEvent<HTMLInputElement>) =>{
-        if(e.target.files !== null){
-            const file = e.target.files[0]
-            console.log(file);
-            const result = await AddImage({variables:{file : file}}) 
-            
-            if(result.data){
-                dataUser?.refetch()
-                props.setOpen(false)
-            }
-    
-        }
-        } 
-        const onSelectFileUpdate = async (e:ChangeEvent<HTMLInputElement>) =>{
-        if(e.target.files !== null){
-            const file = e.target.files[0]
-            const result = await UpdateImage({variables:{file : file}}) 
-            
-            if(result.data){
-                dataUser?.refetch()
-                props.setOpen(false)
-            }
-    
-        }
-        } 
-        
-        const onClickImageDelete = async () =>{
-            const result = await DeleteImage()
-            if(result.data?.deleteImageProfile === true){
-                dataUser?.refetch()
-                props.setOpen(false)
-            }
-        }
-    const [AddImage] = useMutation(QueryImageAdd)
-    const [DeleteImage] = useMutation(QueryImageDelete)
-    const [UpdateImage] = useMutation(QueryImageUpdate)
+       const dataUser= useRecoilValue(refetchState)
+        let image = dataUser?.data?.getUser?.profileImage
+        const setClose = () => props.setOpen(false)
+        const {onAddImage,adding} = useAddImageProfile(setClose)
+        const {onDeleteImage} = useDeleteImageProfile(setClose)
+        const {onUpdateImage,updating} = useUpdateImageProfile(setClose)
+      
   return (
     <Dialog open={props.open} onClose={() => props.setOpen(false)} PaperProps={{ sx: {position:"relative"}}} scroll={'body'} > 
             <IconButton sx={{width : "max-content",position:"absolute",right :".5rem",top:".5rem"}} onClick={() => props.setOpen(false)}> 
                 < Close />
             </IconButton> 
-        <DialogTitle > Set Image </DialogTitle>
+        <DialogTitle > Set Image {(updating || adding) &&  < CircularProgress size={20} sx={{ml:1}} />} </DialogTitle>
         <DialogContent > 
             <DialogContentText > set image profile as you want </DialogContentText>
             
@@ -88,29 +34,26 @@ const DialogSetImageProfile = (props: Props) => {
                 <Fab 
                 aria-label="upload picture"
                 component="label"
-                disabled={  data?.getUser?.profileImage?.url === "" ? false : true}
+                disabled={  image?.url === "" ? false : true}
                 > 
-                <input type="file" hidden onChange={onSelectFileAdd} />
+                <input type="file" hidden onChange={onAddImage} />
                 < PhotoCamera /> 
                 </Fab>
                 <Fab 
-                    disabled={  data?.getUser?.profileImage?.url === "" ? true : false}
+                    disabled={  image?.url === "" ? true : false}
                     aria-label="update picture"
                     component="label"
                     > 
-                
-                    <input type="file" hidden onChange={(e) => onSelectFileUpdate(e)} />
+                    <input type="file" hidden onChange={onUpdateImage} />
                 < Edit /> 
                 </Fab>
                 <Fab 
-                    disabled={  data?.getUser?.profileImage?.url === "" ? true : false}
-                    onClick={onClickImageDelete}
+                    disabled={  image?.url === "" ? true : false}
+                    onClick={onDeleteImage}
                 > 
                 < DeleteForever /> 
-                </Fab>
-                
+                </Fab>        
             </Stack>
-            
         </DialogContent>
 
 </Dialog>

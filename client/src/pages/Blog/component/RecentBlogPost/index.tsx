@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import FlexCardSmall from 'Common/reusableComponent/FlexCardSmall';
 import salad from 'assets/images/svg/foodSalad.svg';
 import useStyles from './Style';
+import useFecthBlog from '../AllBlogPost/Utils/Hooks/useFecthBlog';
+import { getCurrentTime } from 'pages/Blog/Utils/Functions';
 
 function RecentBlogPost() {
     const {classes} = useStyles();
@@ -26,31 +28,28 @@ function RecentBlogPost() {
         }   
     }, [isClicked])
     
-  
-
-
-
+    const article = useFecthBlog({pageSize:4,category:"science"})
+    const blogBig = article?.articles[0]
   return (
     <Box  > 
         <Stack className={classes.stackHeader} > 
             <Typography component={'h1'} sx={{color :"neutrals.darkBlue",fontSize :"1.3rem",fontWeight :500}} > Recent Blog Post </Typography>        
-            <Link to={'#/'} className={classes.viewAll}> View All</Link>
          </Stack>
         <Box sx={{display :{md:"flex"},justifyContent:{md:"space-evenly"},width:"100%"}}> 
-            <Card className={classes.card} ref={cardPoint}> 
-                <CardActionArea className={classes.cardActions} disableRipple disableTouchRipple onMouseUp={ () => setIsClicked(current => !current)} onMouseDown={ () => setIsClicked(current => !current)}  > 
+            <Card className={classes.card} ref={cardPoint} > 
+                <CardActionArea className={classes.cardActions} disableRipple disableTouchRipple onMouseUp={ () => setIsClicked(current => !current)} onMouseDown={ () => setIsClicked(current => !current)} href={blogBig?.url ? blogBig?.url : ""} target={'_blank'}> 
                     < CardMedia 
                         component='img'
-                        src={salad}
+                        src={blogBig?.urlToImage}
                         className={classes.cardMedia}
                     />
-                    <Typography component={'li'} className={classes.typographyDate}> Jun 20, 2022 </Typography>
+                    <Typography component={'li'} className={classes.typographyDate}> {blogBig && getCurrentTime(blogBig?.publishedAt)} </Typography>
                     <CardContent sx={{maxWidth :"26rem"}} > 
                             <Typography component={'h1'} className={classes.typographyHead} > 
-                                Healthy Food Choices for Your Family
+                               {blogBig?.title}
                              </Typography>
                             <Typography className={classes.typographyPara} > 
-                                How can you ensure that your child is well nourished? Here are some tips to keep in mind when planning and preparing meals for your family.
+                            {blogBig?.description}
                              </Typography>
                      </CardContent>
                  </CardActionArea>
@@ -62,11 +61,21 @@ function RecentBlogPost() {
              </Card>
             {
                 matchesMd && (
-                    <Box > 
-                        < FlexCardSmall />
-                        < FlexCardSmall />                       
-                     </Box>
-
+                <Box>
+                    {
+                        article?.articles.slice(1,4).map((blog) =>{
+                            return(
+                                < FlexCardSmall
+                                content={blog.description}
+                                publishedAt={blog.publishedAt}
+                                title={blog.title}
+                                url={blog.url}
+                                urlToImage={blog.urlToImage}
+                            /> 
+                            )
+                        } )
+                    }
+                </Box>                      
 )
 }
          </Box>

@@ -2,6 +2,7 @@ import { ApolloServer, ExpressContext } from 'apollo-server-express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import * as bodyParser from 'body-parser'
 import express from 'express';
 import { graphqlUploadExpress } from 'graphql-upload-ts';
 import { JwtPayload } from 'jsonwebtoken';
@@ -11,6 +12,7 @@ import { buildSchema } from 'type-graphql';
 import { ProductResolver } from './Resolver/ProductResolver';
 import { UserResolver } from './Resolver/userResolver';
 import { generateTimeAccess, generateToken, secretE, verifyToken } from './utils/Functions';
+import { AppResolver } from './Resolver/AppResolver';
 
 
 dotenv.config({path:__dirname +'/.env' })
@@ -24,7 +26,7 @@ const boostraps = async () =>{
     console.clear()
     const schema = await buildSchema({
         resolvers : [
-            UserResolver,ProductResolver
+            UserResolver,ProductResolver,AppResolver
         ],
         authChecker : ({context}:{context:ExpressContext}) => {
             const token = context.req.cookies.Token;

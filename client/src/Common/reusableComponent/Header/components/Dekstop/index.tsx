@@ -1,6 +1,8 @@
 import { List } from '@mui/material'
 import { StateValueContext } from 'Common/ContextApi'
 import { useContext } from 'react'
+import { useRecoilValue } from 'recoil'
+import { isLogined } from 'SetUp/StateManagement/Store'
 import useStyles from '../../Style'
 import { userTypeProfile } from '../../Utils/Interfaces'
 import Checkout from './Components/Checkout'
@@ -15,9 +17,9 @@ type Props = {
 }
 
 const Dekstop = (props: Props) => {
-    const {state} = useContext(StateValueContext)
+    const login = useRecoilValue(isLogined)
     const {classes} = useStyles()
-  
+    console.log(login)
   return (
     <>
     <List className={classes.list}>
@@ -25,7 +27,7 @@ const Dekstop = (props: Props) => {
       < ListNav />
       < Checkout />
       {
-        state.isLogined ?
+        login ?
         (
         < Logined data={props.data} loading={props.loading} />
         ):(

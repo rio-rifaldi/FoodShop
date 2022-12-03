@@ -1,62 +1,83 @@
-import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Pagination, Typography, useMediaQuery } from '@mui/material';
 import FlexCardSmall from 'Common/reusableComponent/FlexCardSmall';
-import FlexCardVerySmall from 'Common/reusableComponent/FlexCardverySmall';
+import { useCallback, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useStyles from './Style';
+import useFecthBlog from './Utils/Hooks/useFecthBlog';
+
+
 
 function AllBlogPost() {
-    const {classes} = useStyles();
-    const theme = useTheme();
-    const matchMd = useMediaQuery(theme.breakpoints.up('md'))
-    const matchSm = useMediaQuery(theme.breakpoints.up('smBlog'))
-    const matchSmDown = useMediaQuery(theme.breakpoints.down('smBlog'))
+    const {classes,theme} = useStyles();
+    const dekstop = useMediaQuery(theme.breakpoints.up(820))
+    const [index, setIndex] = useState(1)
+    const refToTop = useRef<null | HTMLElement>(null)
+
+    let pageSize = dekstop ? 10 : 5
+
+        const article = useFecthBlog({page:index,pageSize})
+
+        const onChangePagination = useCallback((e:unknown,p:number) => {
+            console.log(p);
+            setIndex(p)
+            refToTop.current?.scrollIntoView({behavior: "smooth", block: "start"});
+        },[article])
+        console.log(article)   
   return (
-    <Box > 
-        <Typography component={'h1'} className={classes.head}> All Blog Post </Typography>
-        <Box className={classes.cardContainer} > 
+    <Box ref={refToTop}> 
+        <Typography component={'h1'} className={classes.head} id='all-Blog-Post' > All Blog Post </Typography>
+        <Box className={classes.cardContainer}   > 
+
+        <Box className={classes.cardContainerRight}>  
             {
-                !matchSm ?(
-                    <>
-                        < FlexCardVerySmall />
-                        < FlexCardVerySmall />
-                        < FlexCardVerySmall />
-                        < FlexCardVerySmall />
-                    </>
-                ):(
-                    <>
-                    {
-                        matchMd ?(
-                            <>
-                            <Box > 
-                                 < FlexCardSmall />
-                                < FlexCardSmall />
-                                < FlexCardSmall />
-                                < FlexCardSmall />
+            article?.articles.slice(0,5).map((blog) =>{
+                    return(
+                        < FlexCardSmall
+                            content={blog.description}
+                            publishedAt={blog.publishedAt}
+                            title={blog.title}
+                            urlToImage={blog.urlToImage}
+                            url={blog.url}
+                        />
 
-                             </Box>
-                            <Box > 
-                                < FlexCardVerySmall />
-                                < FlexCardVerySmall />
-                                < FlexCardVerySmall />
-                                < FlexCardVerySmall />
-                             </Box>
-                            </>
-                        ):(
-                            <>
-                                < FlexCardSmall />
-                                < FlexCardSmall />
-                                < FlexCardSmall />
-                                < FlexCardSmall />
-
-                            </>
-                        )
-                    }
-                    </>
-                )
+                    )
+                } )       
             }
-            
-         </Box>
+            </Box>
+
+            <Box className={classes.cardContainerLeft} > 
+                {
+                    dekstop &&(
+                    <>              
+                        {
+                            article?.articles.slice(5,10).map((blog) =>{
+                                return(
+                                    < FlexCardSmall 
+                                        small
+                                        content={blog.description}
+                                        publishedAt={blog.publishedAt}
+                                        title={blog.title}
+                                        urlToImage={blog.urlToImage}
+                                        url={blog.url}
+                                    />
+
+                                )
+                            } )
+                        }
+                    </> 
+                    )
+                }
+             </Box>
+        </Box>
+                {
+                    article?.totalResults &&(
+                        < Pagination count={Math.ceil(article?.totalResults / pageSize)} color='secondary' className={classes.pagination} onChange={onChangePagination}/>
+                    )
+                }
      </Box>
     )
 }
 
 export default AllBlogPost
+
+

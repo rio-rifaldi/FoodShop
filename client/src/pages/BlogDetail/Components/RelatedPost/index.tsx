@@ -46,11 +46,11 @@ function RelatedPost() {
             <Typography sx={{margin :"1.4rem ",fontFamily:"Poppins",color:"neutrals.black",fontSize:"1.2rem"}}>Related post  </Typography>
 
             <Slider {...setting} >           
+                        {/* < FlexCardVerySmall />
                         < FlexCardVerySmall />
                         < FlexCardVerySmall />
                         < FlexCardVerySmall />
-                        < FlexCardVerySmall />
-                        < FlexCardVerySmall />
+                        < FlexCardVerySmall /> */}
              </Slider>
      </Box>
   )

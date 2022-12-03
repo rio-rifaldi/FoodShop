@@ -11,9 +11,6 @@ const FormLogin = (props: Props) => {
     const {classes} = useStyles()
     const {onSubmitForm,register,result} = UseLogin()
     const error = result.error
-
-
-
   return (
 
     <Box component={'form'} autoComplete='off' className={classes.form} onSubmit={onSubmitForm}> 

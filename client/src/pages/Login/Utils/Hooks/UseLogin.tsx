@@ -3,16 +3,25 @@ import { StateValueContext } from 'Common/ContextApi'
 import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { LOGIN } from '../Graphql'
+import { useSetRecoilState } from 'recoil'
+import { isLogined } from 'SetUp/StateManagement/Store'
+import { getImageUser, LOGIN } from '../Graphql'
 import { returnType } from '../Interfaces'
 
 type Props = {}
 
 const UseLogin = () => {
-    const [login,result] = useMutation(LOGIN)
+    const [login,result] = useMutation(LOGIN,{
+      refetchQueries:[
+        {
+          query : getImageUser
+        },
+        "getUser"
+      ]
+    })
     const {reset,register,handleSubmit} = useForm<returnType>()
-    const {dispatch} = useContext(StateValueContext)
     const navigate = useNavigate()
+    const setLogin = useSetRecoilState(isLogined)
 
 
     const onSubmitForm = handleSubmit(async (data,e) =>{
@@ -30,7 +39,7 @@ const UseLogin = () => {
     
           console.log(result);
           if(result){
-            dispatch({type:"IS_LOGINED",payload:true})
+            setLogin(true)
             navigate('/home')
           }
           reset()

@@ -51,7 +51,9 @@ const useStyles = makeStyles() ((theme) =>{
 
         },
         cardMedia :{
-            width:"7rem"
+            width:"7rem",
+            height :"7rem",
+            objectFit:"cover"
         },
         typographyDate :{                                                   
             listStyle :"circle",

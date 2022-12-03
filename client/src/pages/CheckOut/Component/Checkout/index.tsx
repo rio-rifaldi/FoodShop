@@ -1,8 +1,8 @@
 import { ArrowBack } from '@mui/icons-material';
 import { Box, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-import FormCheckOut from '../../Utils/FormCheckOut';
-import ProductCheckOut from '../../Utils/ProductCheckOut';
+import FormCheckOut from '../FormCheckOut';
+import ProductCheckOut from '../ProductCheckOut';
 import useStyles from './Style';
 
 function Checkout() {

@@ -51,7 +51,15 @@ const useStyles = makeStyles() ((theme) =>{
 
         },
         cardMedia :{
-            width:"12rem"
+            // minWidth : "5rem",
+            [theme.breakpoints.between(0,400)]:{
+                height :"9rem",
+            },
+            [theme.breakpoints.up(400)]:{
+                maxHeight :"10rem",
+                maxWidth : "12rem",
+            },
+            objectFit: "cover",
         },
         typographyDate :{
             listStyle :"circle",
@@ -59,7 +67,7 @@ const useStyles = makeStyles() ((theme) =>{
             color :theme.palette.neutrals.grey
         },
         typographyHead :{
-            fontSize :"1.4rem",
+            fontSize :"1.1rem",
             color : theme.palette.neutrals.darkBlue,
             fontWeight : 500
         },
@@ -76,9 +84,10 @@ const useStyles = makeStyles() ((theme) =>{
         },
         ...ChipStyle,
         cardActionArea :{
-            display :"flex",
-            alignItems:'flex-start',
-            // alignItems :"center",
+            [theme.breakpoints.up(400)]:{
+                display :"flex",
+                alignItems:'flex-start',
+            },
         }
     }
 })

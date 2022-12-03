@@ -1,19 +1,22 @@
 import { ShoppingCart } from '@mui/icons-material'
 import { Badge, IconButton } from '@mui/material'
-import { StateValueContext } from 'Common/ContextApi'
-import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
 import useStyles from 'Common/reusableComponent/Header/Style'
+import { Link } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
+import { shopCart } from 'SetUp/StateManagement/Store'
 type Props = {}
 
-const Checkout = (props: Props) => {
-    const {state} = useContext(StateValueContext)
-    const {classes} = useStyles()
 
+
+
+const Checkout = (props: Props) => {
+    const {classes} = useStyles()
+    const cart = useRecoilValue(shopCart)
+  console.log(cart)
   return (
     <Link to='/checkOut'> 
     <IconButton > 
-        <Badge badgeContent={state.shopChart} className={classes.badge} color='secondary'> 
+        <Badge badgeContent={cart} className={classes.badge} color='secondary'> 
           < ShoppingCart color='action' />
         </Badge>
       </IconButton>  

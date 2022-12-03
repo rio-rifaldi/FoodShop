@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { DeleteForever } from '@mui/icons-material'
-import { Box, IconButton } from '@mui/material'
+import { Box, CircularProgress, IconButton } from '@mui/material'
 import { DeleteImageProduct, ProductDetail } from 'pages/MyFood/Utils/Graphql'
 import { ProductI } from 'pages/MyFood/Utils/Interfaces'
 import { useParams } from 'react-router-dom'
@@ -10,8 +10,8 @@ import useStyles from './Style'
 
 function Image() {
   const {productId} = useParams()
-  const [DeleteImage] = useMutation(DeleteImageProduct)
-  const {data,loading,refetch} = useQuery<ProductI>(ProductDetail,{
+  const [DeleteImage,{loading}] = useMutation(DeleteImageProduct)
+  const {data,refetch} = useQuery<ProductI>(ProductDetail,{
     variables : {
        productId
     }
@@ -60,8 +60,16 @@ function Image() {
                     right :"1rem"
                   }}
                   onClick={() =>  onDeleteImage(image?.public_id)} 
+                  size={'large'}
+                  disabled={loading && true}
                 > 
-                    < DeleteForever />  
+                  {
+                    loading ?(
+                      <CircularProgress color="primary" size={30} />
+                    ):(
+                      < DeleteForever fontSize="large" />  
+                    )
+                  }
                  </IconButton>
               )
                 }

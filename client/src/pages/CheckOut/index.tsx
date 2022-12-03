@@ -6,7 +6,7 @@ type Props = {}
 function CheckOut({}: Props) {
   return (
     <>
-    < Checkout />
+       < Checkout />
     </>
   )
 }

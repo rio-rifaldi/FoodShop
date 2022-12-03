@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { PhotoCamera, Send } from '@mui/icons-material';
-import { Box, Button, Chip, IconButton, InputLabel, Stack, TextField } from '@mui/material';
+import { Box, Button, Chip, CircularProgress, IconButton, InputLabel, Stack, TextField } from '@mui/material';
 import { chipColor } from 'pages/MyFood/Utils/Functions/Color';
 import { ProductDetail } from 'pages/MyFood/Utils/Graphql';
 import { ProductI } from 'pages/MyFood/Utils/Interfaces';
@@ -21,7 +21,7 @@ function Detail() {
    })
    
    const {onClickTaste,onUpdate,onKeyDownTaste,register,setTaste,taste} = UpdateData()
-   const {onAddImage} = AddImage({refetch})
+   const {onAddImage,loading:addImageLoad} = AddImage({refetch})
 
     console.count("render")
      return (
@@ -49,8 +49,14 @@ function Detail() {
                
                               />
                            <IconButton aria-label="upload picture" component="label"> 
-                              <input type="file"  hidden onChange={onAddImage}  />
-                              < PhotoCamera />
+                              <input type="file"  hidden onChange={onAddImage} disabled={addImageLoad && true} />
+                              {
+                                 addImageLoad ?(
+                                    < CircularProgress size={30} />
+                                 ):(
+                                    < PhotoCamera />
+                                 )
+                              }
                            </IconButton>
                         </Box>
                      </Box>

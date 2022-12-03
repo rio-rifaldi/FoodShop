@@ -1,3 +1,4 @@
+import { imageI } from './../utils/interfaces';
 import { ExpressContext } from 'apollo-server-express';
 import { GraphQLError } from 'graphql';
 import { GraphQLUpload } from 'graphql-upload-ts';
@@ -6,6 +7,8 @@ import { ProductType } from "../dataSchema/ProductSchema";
 import ProductService from "../Services/ProductService";
 import { ProductInput } from "../TypeDef/InputType/ProductInputType";
 import { UploadFileI } from '../utils/interfaces';
+import { imagesType } from '../TypeDef/imageType';
+import { ImageTypeScalar } from '../utils/ImageTypeScalar';
 
 @Resolver()
 export class ProductResolver{  
@@ -27,11 +30,11 @@ export class ProductResolver{
     @Mutation(() => ProductType)
    async createProduct (
     @Arg('input') input : ProductInput,
-    @Arg('file',() => [GraphQLUpload]) file: UploadFileI[],
-    @Ctx() ctx:ExpressContext
+    @Ctx() ctx:ExpressContext,
+    @Arg('imageType',type => [ImageTypeScalar] ) imageType:imageI[]
     ):Promise< GraphQLError | ProductType> {
         console.clear()
-    return this.productService.createProduct(input,ctx,file)
+    return this.productService.createProduct(input,ctx,imageType)
    }
 
     @Mutation(() => Boolean)
@@ -82,6 +85,24 @@ export class ProductResolver{
     
     )   {
     return this.productService.deleteProduct(ProductId,ctx)
+   }
+
+    @Mutation(() => [imagesType])
+    async addImageProductSelf (
+        @Arg('file',() => [GraphQLUpload]) file: UploadFileI[],
+        @Ctx() ctx:ExpressContext,
+    
+    )   {
+    return this.productService.addImageProductSelf(file,ctx)
+   }
+
+    @Mutation(() => Boolean)
+   async deleteImageProductSelf (
+    @Arg('publicId') publicId: string,
+    @Ctx() ctx:ExpressContext,
+    
+    )   {
+    return this.productService.deleteImageProductSelf(publicId,ctx)
    }
 }
 

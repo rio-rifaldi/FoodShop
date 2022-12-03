@@ -27,6 +27,10 @@ export class ProductType{
     @prop({required:true})
     public stock : Number  
 
+    @Field(() => Number)
+    @prop({required:false})
+    public rating : Number  
+
     @Field(() => String)
     @prop({required:true})
     public expired : String

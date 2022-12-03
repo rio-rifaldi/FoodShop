@@ -1,11 +1,7 @@
 import { Add, Close, Remove } from '@mui/icons-material';
-import { Box, IconButton, Stack, Typography } from '@mui/material'
-import React, { useState } from 'react'
-import { makeStyles } from 'tss-react/mui'
+import { Box, IconButton, Stack, Typography } from '@mui/material';
+import { useState } from 'react';
 import useStyles from './Style';
-
-
-
 
 interface Props{
     productName :string,

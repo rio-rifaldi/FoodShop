@@ -7,13 +7,8 @@ import { Link } from 'react-router-dom'
 import useStyles from './Style'
 import FormLogin from './Utils/Components/FormLogin'
 
-
-
-
 const Login = () => {
   const {classes} = useStyles()
-
-
 
   return (
     <>

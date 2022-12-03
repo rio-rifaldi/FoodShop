@@ -1,55 +1,32 @@
-import { ApolloQueryResult, gql, OperationVariables, useMutation } from '@apollo/client'
-import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, InputLabel, TextField } from '@mui/material'
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, InputLabel } from '@mui/material'
 import { Box } from '@mui/system'
+import PasswordField from 'Common/reusableComponent/PasswordField'
+import useVerfyUser from 'pages/ProfileCreator/Utils/Hooks/useVerfyUser'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { userType } from '..'
 import DialogUpdate from './DialogUpdate'
 
-const queryVerify = gql`
 
-    mutation verifyUserUpdate($password: String!){
-    VerifyUserUpdate(password: $password)
-    }
-`
 type verify = {
     password : string,
 }
-
 
 type Props = {
     isOpenDialog : boolean,
     setIsOpenDialog :React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const DialogVerfy = (props: Props) => {
-    const [isOpenPassword, setIsOpenPassword] = useState(false)
+const DialogVerfy = ({isOpenDialog,setIsOpenDialog}: Props) => {
     const {register,handleSubmit,reset} = useForm<verify>()
-    const [verifyUser,{error,reset:resetMutation}]  = useMutation(queryVerify)
     const [isOpenDialogUpdateAccount, setisOpenDialogUpdateAccount] = useState(false)
+    const onClose = () => setisOpenDialogUpdateAccount(false)
+    const onOpen = () => setisOpenDialogUpdateAccount(true)
+    const {error,onVerify,resetMutation} = useVerfyUser({onOpen,setIsOpenDialog,reset})
 
-
-    const onSubmitVerify = handleSubmit(async ({password},e) =>{
-        e?.preventDefault()
-
-        reset()
-        verifyUser({
-            variables :{
-                password
-            }
-        }).then((result) =>{
-            if(result.data?.VerifyUserUpdate === true){
-                props.setIsOpenDialog(false)
-                setisOpenDialogUpdateAccount(true)
-            }
-        } ).catch((err) => console.log(err))
-
-        
-    } )
+    const onSubmitVerify = handleSubmit(onVerify)
 
     const oncloseVerify = () => {
-        props.setIsOpenDialog(false);
+        setIsOpenDialog(false);
         resetMutation()
         reset()
     }
@@ -57,14 +34,15 @@ const DialogVerfy = (props: Props) => {
   return (
     <>
        < DialogUpdate setClose={setisOpenDialogUpdateAccount} open={isOpenDialogUpdateAccount}/>
-         <Dialog open={props.isOpenDialog} onClose={oncloseVerify} >
+         <Dialog open={isOpenDialog} onClose={oncloseVerify} >
          <Box component={'form'} onSubmit={onSubmitVerify}> 
             <DialogTitle > Access Password !!! </DialogTitle>
             <DialogContent > 
                 <DialogContentText my={2} > please type your Password for verfy </DialogContentText>
 
                     <InputLabel shrink htmlFor='password'> Password : </InputLabel>
-                    < TextField 
+                    < PasswordField register={register} error={error} variant="outlined"/>
+                    {/* < TextField 
                         placeholder='password'
                         size='small'
                         id='password'
@@ -79,8 +57,7 @@ const DialogVerfy = (props: Props) => {
                                 <IconButton onClick={() => setIsOpenPassword((prev) => !prev)}> 
                                 {
                                     isOpenPassword ? (
-                                        < Visibility />
-                                        
+                                        < Visibility />            
                                     ):(
                                         < VisibilityOff />   
                                     )
@@ -88,7 +65,7 @@ const DialogVerfy = (props: Props) => {
                                 </IconButton>
                             )
                         }}
-                    />
+                    /> */}
                     
             </DialogContent>
             <DialogActions > 

@@ -5,7 +5,8 @@ const useStyles = makeStyles() ((theme) =>{
     return{
         mainContainer :{
             margin :"1rem 1.6rem",
-          maxWidth :"45rem",
+          // maxWidth :"45rem",
+          width : "85%",
           [theme.breakpoints.up('sm')]:{
             margin :"1rem auto",
           },
@@ -57,7 +58,8 @@ const useStyles = makeStyles() ((theme) =>{
         paragraf:{
           color : theme.palette.neutrals.grey,
           fontFamily :"Poppins",
-          margin:".2rem 0"
+          margin:".2rem 0",
+          textAlign:"justify"
         },
         grid :{
           color : theme.palette.neutrals.grey,
@@ -71,7 +73,8 @@ const useStyles = makeStyles() ((theme) =>{
               fontSize :".7rem"
             }
           }
-        }
+        },
+  
     }
 })
 

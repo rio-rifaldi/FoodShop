@@ -1,37 +1,23 @@
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { Box } from '@mui/material'
 import { useEffect } from 'react'
 import { useSetRecoilState } from 'recoil'
 import { dataUserI, refetchState } from 'SetUp/StateManagement/Store'
-import ProfileBio, { userType } from './Component/ProfileBio'
+import ProfileBio from './Component/ProfileBio'
 import ProfileTab from './Component/ProfileTab'
-import { getUser } from './Utils/Graphql'
+import { GET_ALL_USER } from './Utils/Graphql'
+import useFetchUser from './Utils/Hooks/useFetchUser'
 
 
-type Props = {}
 
-const ProfileCreator = (props: Props) => {  
-    const {data, refetch,loading,called} = useQuery<userType>(getUser,{
-        fetchPolicy :"cache-and-network"
-    })
-        const setRefetch = useSetRecoilState<dataUserI | null>(refetchState)
 
-        useEffect(() => {
-            if(data && !loading ){
-                setRefetch({
-                    refetch,data,loading
-                })
-
-            }
-      
-        }, [loading])
-        
-
+const ProfileCreator = () => {  
+    const User = useFetchUser()
     return (   
  
             <Box sx={{margin :"6rem auto 4rem auto"}}>  
                 < ProfileBio/>
-                < ProfileTab  />
+                < ProfileTab />
             </Box>
    
 

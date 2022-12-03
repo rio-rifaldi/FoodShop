@@ -1,11 +1,8 @@
-import React, { useState } from 'react'
-import profilling from 'assets/images/svg/profilling.svg'
-import { makeStyles } from 'tss-react/mui'
 import { Box, Button, Typography } from '@mui/material'
+import profilling from 'assets/images/svg/profilling.svg'
 import DialogAdd from 'pages/ProfileCreator/Component/ProfileBio/utils/DialogAdd'
+import { useState } from 'react'
 import useStyles from './Style'
-import { ApolloQueryResult, OperationVariables } from '@apollo/client'
-import { userType } from 'pages/ProfileCreator/Component/ProfileBio'
 type Props = {
 
 }

@@ -1,6 +1,6 @@
 import  { createContext, Dispatch, ReactNode, useReducer } from "react";
 
-type Action = {type : "ADD_SHOPPING_CART"}  | {type :"DIALOG_CREATE_PRODUCT"} | {type: "IS_LOGINED",payload : boolean} | {type : "IS_DRAWER_OPEN",payload : boolean}
+type Action = {type : "SHOPPING_CART_COUNT",payload : number}  | {type :"DIALOG_CREATE_PRODUCT"} | {type: "IS_LOGINED",payload : boolean} | {type : "IS_DRAWER_OPEN",payload : boolean} 
 
 const initialState = {
     shopChart : 0,
@@ -17,10 +17,10 @@ type AppState  = typeof initialState
 
 const reducer = (state:AppState,action:Action):AppState =>{
     switch(action.type){
-        case "ADD_SHOPPING_CART":
+        case "SHOPPING_CART_COUNT":
             return{
                 ...state,
-                shopChart : state.shopChart + 1
+                shopChart : state.shopChart + action.payload
             }
         case "DIALOG_CREATE_PRODUCT":
             return{

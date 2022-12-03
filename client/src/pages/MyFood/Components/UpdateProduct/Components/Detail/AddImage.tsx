@@ -8,7 +8,7 @@ interface Props{
 }
 const AddImage = ({refetch} :Props) => {
     const {productId} = useParams()
-    const [AddImage] = useMutation(AddImageProduct)
+    const [AddImage,{loading}] = useMutation(AddImageProduct)
   
     const onAddImage = async (e:React.ChangeEvent<HTMLInputElement>) => {
        const file = e.target.files![0]
@@ -22,7 +22,7 @@ const AddImage = ({refetch} :Props) => {
           refetch()
        }
      }
-     return {onAddImage}
+     return {onAddImage,loading}
 }
 
 export default AddImage

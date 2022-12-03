@@ -2,6 +2,7 @@ import { ProductType } from './ProductSchema';
 import { getModelForClass, modelOptions, prop, Ref } from "@typegoose/typegoose";
 import { Field, ID, ObjectType } from "type-graphql";
 import { imagesType } from '../TypeDef/imageType';
+import { ShopChartType } from '../TypeDef/shopCartType';
 
 @ObjectType()
 
@@ -31,7 +32,7 @@ export class userDataSchema {
     @Field(() => imagesType,{nullable:true})
     @prop({required:false})
     public profileImage ?: imagesType
-
+    
     // userDetail
 
 
@@ -53,6 +54,10 @@ export class userDataSchema {
 
     @Field({nullable:true})
     @prop({required:false})
+    public rating : number
+
+    @Field({nullable:true})
+    @prop({required:false})
     public country : String
 
     @Field({nullable:true})
@@ -66,8 +71,12 @@ export class userDataSchema {
     @prop({required:false,ref: () => ProductType,type: [ProductType] })
     public product : Ref<ProductType>[]
     
+    // shpopping cart --> ref to productID
 
 
+    @Field(() => [ShopChartType],{nullable:true})
+    @prop({required:false,type: [ShopChartType] })
+    public shopCart : ShopChartType[]
 
 }
 
@@ -77,6 +86,7 @@ export let UserDetailBlank ={
     birthDay : null,
     numberTelp : null,
     profession : null,
+    rating: null,
     country : null,
     profileImage : {
         url : "",
@@ -85,7 +95,8 @@ export let UserDetailBlank ={
         public_id : "",
         extension : ""
     },
-    product :[]
+    product :[],
+    shopCart : []
 }
 
 @ObjectType()

@@ -8,3 +8,14 @@ export const LOGIN = gql`
    }
 }
 ` 
+
+export const getImageUser = gql`
+  query getUser{
+    getUser{
+       profileImage {
+        url
+        secureUrl
+    }
+    }
+  }
+`

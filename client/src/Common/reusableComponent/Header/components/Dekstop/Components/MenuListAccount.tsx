@@ -6,6 +6,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { AccountCircle, Article, Fastfood, Logout, PersonAdd } from '@mui/icons-material'
 import { gql, useMutation } from '@apollo/client'
 import { StateValueContext } from 'Common/ContextApi'
+import { isLogined, shopCart } from 'SetUp/StateManagement/Store'
+import { useResetRecoilState, useSetRecoilState } from 'recoil'
 
 type Props = {
     achorEl:  HTMLElement | null,
@@ -19,9 +21,10 @@ const LOGOUT = gql`
 
 const MenuListAccount = ({achorEl,setAchorEl}: Props) => {
     const {classes} = useStyles()
-    const {dispatch} = useContext(StateValueContext)
     const navigate = useNavigate()
+    const setLogin = useSetRecoilState(isLogined)
     const [LogOut] = useMutation(LOGOUT)
+    const resetCart = useResetRecoilState(shopCart)
     const open = Boolean(achorEl)
     const handleClose = () => {
         setAchorEl(null)
@@ -29,8 +32,8 @@ const MenuListAccount = ({achorEl,setAchorEl}: Props) => {
     const logoutHaddle = async () =>{
         try {
             const data = await LogOut()
-            
-            dispatch({type : "IS_LOGINED",payload :false})
+            setLogin(false)
+            resetCart()
             navigate('/home',{replace : true})
             if(data.errors) throw Error
         } catch (error) {

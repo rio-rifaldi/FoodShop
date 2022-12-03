@@ -1,13 +1,21 @@
-import { Card, CardActionArea, CardActions, CardContent, CardMedia, Chip, Typography, useTheme } from '@mui/material';
+import { Card, CardActionArea, CardActions, CardContent, CardMedia, Chip, Typography } from '@mui/material';
 import cherry from 'assets/images/svg/cherry.svg';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useStyles from './Style';
 import useOnClicked from './Utils/Hooks/useOnClicked';
 
 
 
-function FlexCardSmall() {
+ interface Props{
+    small ?: boolean,
+    publishedAt : string | null
+    title : string,
+    content : string | null,
+    urlToImage : string | null,
+    url : string
+ }
+function FlexCardSmall(props : Props) {
     const {classes} = useStyles();
     const cardPoint = useRef<HTMLDivElement>(null)
     const navigate = useNavigate()
@@ -21,28 +29,51 @@ function FlexCardSmall() {
         onMouseUp: () => setIsClicked(current => !current),
         onMouseDown: () => setIsClicked(current => !current),
         className :classes.cardActionArea,
-        onClick :() => navigate('detail')
     }
-
+    const minimizeContent = (content:string | null,size:number) =>{
+        if(!content) return
+        if(content?.length >  size){
+            const trivia = `${content.slice(0,size)} ...`
+            return trivia
+        }else{
+            return content
+        }
+    } 
+    const getCurrentTime = (time:string | null) => {
+        if(!time) return
+        const date = new Date(time);
+        
+        return date.toLocaleString()
+    }
   
 
   return (
     
             <Card className={classes.card} ref={cardPoint}  > 
-                <CardActionArea {...cardProps}> 
+            
+                <CardActionArea {...cardProps} href={props.url} target="_blank"> 
                     < CardMedia 
                         component='img'
-                        src={cherry}
+                        src={props.urlToImage ? props.urlToImage : cherry }
                         className={classes.cardMedia}
+                        sx={
+                            props.small ? {
+                                height :"5rem",
+                                width :"9rem",
+                            }: undefined
+                        }
                  
                     />
                     <CardContent sx={{maxWidth :"26rem"}} > 
-                    <Typography component={'li'} className={classes.typographyDate}> Jun 20, 2022 </Typography>
+                    <Typography component={'li'} className={classes.typographyDate}> {getCurrentTime(props.publishedAt)}</Typography>
                             <Typography component={'h1'} className={classes.typographyHead} > 
-                                Healthy Food Choices for Your Family
+                               {
+                                props.small ? minimizeContent(props.title,40):minimizeContent(props.title,100)
+                               }
                              </Typography>
                             <Typography className={classes.typographyPara} > 
-                                How can you ensure that your child is well nourished? Here are some tips to keep in mind when planning and preparing meals for your family.
+                                {   props.small ? minimizeContent(props.content,40):minimizeContent(props.content,100)
+                                }
                              </Typography>
                      </CardContent>
                  </CardActionArea>

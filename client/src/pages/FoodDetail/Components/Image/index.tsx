@@ -1,13 +1,20 @@
+import { useQuery } from '@apollo/client'
 import { Box } from '@mui/material'
+import { useParams } from 'react-router-dom'
 import Slider from 'react-slick'
-import Bibimbap from "assets/images/svg/Bibimbap.svg"
-import chicken from "assets/images/svg/chiken.svg"
-import salad from "assets/images/svg/foodSalad.svg"
-import topoki from "assets/images/svg/Tokpokki.svg"
+import { GET_PRODUCT_DETAIL } from '../Utils/Graphql'
+import { ProductDetailI } from '../Utils/Interfaces'
 import useStyles from './Style'
   
 
 function Image() {
+  const {productId} = useParams()
+  const {data,loading} = useQuery<ProductDetailI>(GET_PRODUCT_DETAIL,{
+    variables : {
+       productId
+    }
+ })
+ 
   const {classes} = useStyles();
       const setting ={
         className :classes.slider,
@@ -19,21 +26,31 @@ function Image() {
         autoplaySpeed: 3000,
         slidesToShow: 1,
         slidesToScroll: 1,
-        customPaging: () =>{
+        customPaging: (number:number) =>{
           return(
-            <img src={chicken} alt="chicken" />
+            
+              <img className={classes.imageContainer} src={data?.Product.image[number].url} alt="Bibimbap" />
+              
           )
         } 
       }
+    
+
   return (
-    <>
+    <Box>
         <Slider {...setting} > 
-              <Box  > <img className={classes.imageContainer} src={chicken} alt="chicken" /> </Box>
-              <Box > <img className={classes.imageContainer}src={topoki} alt="topoki" /> </Box>
-              <Box  > <img className={classes.imageContainer}src={Bibimbap} alt="Bibimbap" /> </Box>
-              <Box  > <img className={classes.imageContainer}src={salad} alt="salad" /> </Box>
+        {
+          data?.Product.image.map((image) =>{
+            return(
+            // <Box >
+              <img src={image.url} alt="Bibimbap"  className={classes.imageContainer}/>
+            //</Box>   
+            )
+          } )
+        }
          </Slider>
-    </>
+   
+    </Box>
   )
 }
 

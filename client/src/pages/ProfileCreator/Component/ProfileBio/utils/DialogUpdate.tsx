@@ -1,11 +1,10 @@
-import { ApolloQueryResult, gql, OperationVariables, useMutation } from '@apollo/client'
-import { AccountCircle, Email, LockPerson, Person, Visibility, VisibilityOff } from '@mui/icons-material'
+import { gql, useMutation } from '@apollo/client'
+import { AccountCircle, Email, LockPerson, Visibility, VisibilityOff } from '@mui/icons-material'
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, InputLabel, TextField } from '@mui/material'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useRecoilValue } from 'recoil'
 import { refetchState } from 'SetUp/StateManagement/Store'
-import { userType } from '..'
 
 type outputForm = {
     email : string,

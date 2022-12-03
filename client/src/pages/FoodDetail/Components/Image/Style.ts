@@ -30,9 +30,10 @@ const useStyles = makeStyles() ((theme) =>{
           }
         },
         imageContainer :{
-          width :"15rem",
-          display :"inline-block",
-          margin :"0 auto"
+          objectFit : "cover",
+          // objectPosition :"center",
+          // display :"inline-block",
+          // margin :"auto"
         }
   
     }

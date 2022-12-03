@@ -5,8 +5,8 @@ import { JwtPayload } from 'jsonwebtoken';
 import { ProductType, ProductTypeModel } from "../dataSchema/ProductSchema";
 import { userModel } from '../dataSchema/UserSchema';
 import { ProductInput } from "../TypeDef/InputType/ProductInputType";
-import { deleteImage, secretE, uploadFile, verifyToken } from '../utils/Functions';
-import { UploadFileI } from '../utils/interfaces';
+import { deleteImage, secretE, uploadFile, uploadFileBase64, verifyToken } from '../utils/Functions';
+import { imageI, UploadFileI } from '../utils/interfaces';
 
     
 class ProductService{
@@ -63,11 +63,22 @@ class ProductService{
                 _id:productId
             })
             console.timeEnd("find product")
-
+            
             if(!deleted) return new GraphQLError("incorrect ProductId")
 
+            const updateUserProduct = await userModel.updateOne({
+                _id:verify.data.ID
+            },{
+                $pull:{
+                    product:{
+                        $in:[deleted._id]
+                    }
+                }
+            })
+            console.log(updateUserProduct)
+
             console.time("delete product")
-            const deleting = deleted.image.map ((image) =>{
+            const deleting = deleted.image.map((image) =>{
                 return deleteImage(image.public_id)
             } )
             const result = await Promise.all(deleting)
@@ -87,7 +98,7 @@ class ProductService{
     async createProduct(
         {taste,name,price,description,stock,expired}:ProductInput,
         {req}:ExpressContext,
-        file : UploadFileI[]
+        imageType : imageI[]
     ){
 
         try {
@@ -96,21 +107,10 @@ class ProductService{
             const verify = verifyToken(token,secretE.secretTokenRefresh) as JwtPayload
             if(!verify) throw Error("you must re-login");
 
-                console.time('maping image')
-                const images = file.map((el) =>{
-                    return uploadFile(el,`${verify.data.username}/Product`)
-                } )
-                console.timeEnd('maping image')
-
-                console.time("upload PromiseAll")
-                const Upload  =  await Promise.all(images)
-                console.timeEnd("upload PromiseAll")
-                
-            
                     const dataProduct = {
                         taste,name,price,description,stock,expired,
                         owner: verify.data.ID,
-                        image: Upload 
+                        image: imageType 
                     }
 
                     console.time("saving product to db")
@@ -119,7 +119,7 @@ class ProductService{
                     console.timeEnd("saving product to db")
                     
                     
-                    if(Upload && product){
+                    if(product){
                         console.time("push data to userDb")
                         const result  = await userModel.updateOne({_id : verify.data.ID},{
                             $push:{
@@ -195,13 +195,71 @@ class ProductService{
             }
         })
         console.log(product);
-        if(product .modifiedCount !== 0 && result){
+        if(product.modifiedCount !== 0 && result){
             return true
         }else{
             return false
         }
 
     }
+    async addImageProductSelf (
+        file : UploadFileI[],
+        {req}:ExpressContext, 
+    ){
+        console.clear();
+        try {
+            const token = req.cookies.RefreshToken
+            const verify = verifyToken(token,secretE.secretTokenRefresh) as JwtPayload
+            if(!verify) throw Error("you must re -login");
+            
+            const images = file.map((image) =>{
+                return uploadFile(image,`${verify.data.username}/Product`)
+            } )
+
+            console.time('uploadImage')
+            const result = await Promise.all(images)
+            console.timeEnd('uploadImage')
+            
+    
+            if(result){
+                return result
+            }
+        } catch (err:any) {
+            return new GraphQLError(err)
+        }
+
+        
+    }
+
+
+    async deleteImageProductSelf (
+        publicId : string,
+        {req}:ExpressContext, 
+    ){
+        console.clear();
+        try {
+            const token = req.cookies.RefreshToken
+            const verify = verifyToken(token,secretE.secretTokenRefresh) as JwtPayload
+            if(!verify) throw Error("you must re -login");
+        
+          
+            const result = await deleteImage(publicId)
+    
+            console.log(result);
+            if(result){
+                return true
+            }else{
+                throw new Error('error')
+            }
+        } catch (err:any) {
+            return new GraphQLError(err)
+        }
+
+        
+    }
+
+
+
     async addImageProduct (
         file : UploadFileI,
         productId : string,
@@ -214,7 +272,7 @@ class ProductService{
 
         const product = await ProductTypeModel.findOne({owner:verify.data.ID})
 
-        const image = await uploadFile((await file),`${verify.data.username}/Product/${product?.name}`)
+        const image = await uploadFile((await file),`${verify.data.username}/Product`)
 
         const productUpdated = await ProductTypeModel.updateOne({
             _id:productId

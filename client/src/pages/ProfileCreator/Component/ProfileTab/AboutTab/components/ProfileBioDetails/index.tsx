@@ -20,66 +20,61 @@ const ProfileBioDetails = (props: Props) => {
     const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
     const [isUpdateOpen, setIsUpdateOpen] = useState<boolean>(false)
     const {classes} = useStyles()
-    let data = user?.data
+    let data = user?.data?.getUser
     let loading = user?.loading
 
 
     const setOpen = () => setIsDeleteOpen(true);
-    
-    console.log(data,"profile")
-
     const setClose = () => setIsDeleteOpen(false) 
-
     const setCloseUpdate = () =>   setIsUpdateOpen(false)
-    
     const setOpenUpdate = () => setIsUpdateOpen(true)
     
     return (
 
         <>
-            < DialogDelete isDeleteOpen={isDeleteOpen} username={loading ? "": data?.getUser.username} setClose={setClose}/>  
+            < DialogDelete isDeleteOpen={isDeleteOpen} username={loading ? "": data?.username} setClose={setClose}/>  
             < DialogUpdate handleClose={setCloseUpdate}  isOpen={isUpdateOpen}  />
 
             <Box className={classes.boxContainer}> 
                     <Box className={classes.boxField}> 
                         <Typography className={classes.titleField} > Name </Typography>    
-                        <Typography className={classes.valueField} > {!loading ? data?.getUser.firstName + " " + data?.getUser.lastName : "...."}</Typography>
+                        <Typography className={classes.valueField} > {!loading ? data?.firstName + " " + data?.lastName : "...."}</Typography>
                     </Box>
                         < Divider />
       
                     <Box className={classes.boxField} my=".9rem"> 
                         <Typography className={classes.titleField} > Username </Typography>    
-                        <Typography className={classes.valueField} > {!loading ? data?.getUser.username : "..."} </Typography>
+                        <Typography className={classes.valueField} > {!loading ? data?.username : "..."} </Typography>
                         </Box>
                         < Divider />
 
                     <Box className={classes.boxField} my=".9rem"> 
                         <Typography className={classes.titleField} > Email </Typography>    
-                        <Typography  className={classes.valueField}  >{!loading ? data?.getUser.email : "..."} </Typography>
+                        <Typography  className={classes.valueField}  >{!loading ? data?.email : "..."} </Typography>
                         </Box>
                         < Divider />
 
                     <Box className={classes.boxField} my=".9rem"> 
                         <Typography className={classes.titleField}  > Phone number </Typography>    
-                        <Typography className={classes.valueField} > {!loading? data?.getUser.numberTelp : "..."}  </Typography>
+                        <Typography className={classes.valueField} > {!loading? data?.numberTelp : "..."}  </Typography>
                         </Box>
                         < Divider />
 
                     <Box  className={classes.boxField} my=".9rem"> 
                         <Typography className={classes.titleField} > Birth Day </Typography>    
-                        <Typography className={classes.valueField} > {!loading ? data?.getUser.birthDay : "..."}  </Typography>
+                        <Typography className={classes.valueField} > {!loading ? data?.birthDay : "..."}  </Typography>
                 </Box>
                         < Divider />
                         
                     <Box className={classes.boxField} my=".9rem"> 
                         <Typography className={classes.titleField} > Country </Typography>    
-                        <Typography className={classes.valueField} > {!loading ? data?.getUser.country : "..."}  </Typography>
+                        <Typography className={classes.valueField} > {!loading ? data?.country : "..."}  </Typography>
                 </Box>
                         < Divider />
                         
                     <Box sx={{margin:".9rem 0"}}> 
                         <Typography className={classes.titleField}  > Address </Typography>    
-                        <Typography className={classes.valueField} >{!loading ? data?.getUser.address : "..."} </Typography>
+                        <Typography className={classes.valueField} >{!loading ? data?.address : "..."} </Typography>
                         </Box>
                         < Divider />
 

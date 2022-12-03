@@ -1,7 +1,5 @@
-import { ApolloQueryResult, OperationVariables } from '@apollo/client'
 import { Close } from '@mui/icons-material'
 import { Dialog, DialogContent, DialogContentText, DialogTitle, IconButton, useMediaQuery } from '@mui/material'
-import { userType } from 'pages/ProfileCreator/Component/ProfileBio'
 import FormAddMoreBio from './FormUpdate'
 
 type Props = {

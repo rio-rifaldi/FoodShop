@@ -1,4 +1,5 @@
 import { Card, CardActionArea, CardContent, CardMedia, Rating, Stack, Typography } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import useStyles from './Style'
 import { Props } from './Utils/Interfaces'
 
@@ -9,12 +10,16 @@ import { Props } from './Utils/Interfaces'
 function SimpleCard(props:Props) {
   let {image,alt,price,rating,labelRating,name,creator,id} = props
   const {classes} = useStyles()
+  const navigate = useNavigate()
+  const gotoDetail = () => {
+    navigate(`${id}`)
+  }
   return (
     <>
 
       <Card className={classes.Card} sx={creator ? {height : "14rem"} : {   height :"15.4rem"}}>  
   
-      <CardActionArea disableRipple  > 
+      <CardActionArea disableRipple onClick={gotoDetail}  > 
 
           <CardMedia
           component='img'

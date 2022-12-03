@@ -180,6 +180,34 @@ export const uploadFile = async (
         
 } 
 
+export const uploadFileBase64 = async (
+    baseUrl : string,
+    folderName : string
+    ) =>{  
+
+                    const streamLoad = await cloudinary.v2.uploader.upload(baseUrl,{
+                        public_id: `${uuid.v4()}`, 
+                        folder:`FoodShop/${folderName}`,
+                        transformation :{
+                            // quality : "auto",
+                            fetch_format : "auto"
+                        } 
+                    });
+
+
+                    return{
+                        public_id : streamLoad.public_id,
+                        url  : streamLoad.url,
+                        secureUrl  : streamLoad.secure_url,
+                        bytes  : streamLoad.bytes,
+                        extension  : streamLoad.format
+                    }
+
+     
+        }
+ 
+
+
 
 
 
