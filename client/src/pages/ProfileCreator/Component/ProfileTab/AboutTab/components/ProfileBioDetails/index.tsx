@@ -8,31 +8,30 @@ import useStyles from './Style'
 import DialogDelete from './utils/DialogDelete'
 import DialogUpdate from './utils/DialogUpdate'
 
-type Props = {
+interface Props {
 
-    
+    delete :{
+        setOpen: () => void;
+    }
 }
 
 
 const ProfileBioDetails = (props: Props) => {
 
     const user = useRecoilValue(refetchState)
-    const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
     const [isUpdateOpen, setIsUpdateOpen] = useState<boolean>(false)
     const {classes} = useStyles()
     let data = user?.data?.getUser
     let loading = user?.loading
 
-
-    const setOpen = () => setIsDeleteOpen(true);
-    const setClose = () => setIsDeleteOpen(false) 
+    const {setOpen} = props.delete
     const setCloseUpdate = () =>   setIsUpdateOpen(false)
     const setOpenUpdate = () => setIsUpdateOpen(true)
     
     return (
 
         <>
-            < DialogDelete isDeleteOpen={isDeleteOpen} username={loading ? "": data?.username} setClose={setClose}/>  
+          
             < DialogUpdate handleClose={setCloseUpdate}  isOpen={isUpdateOpen}  />
 
             <Box className={classes.boxContainer}> 

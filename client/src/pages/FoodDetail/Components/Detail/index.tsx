@@ -1,8 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { AddShoppingCart } from '@mui/icons-material';
 import { Box, Button, Grid, InputLabel, Link, ListItem, Rating, Stack, TextField, Typography } from '@mui/material';
-import { ProductDetail } from 'pages/MyFood/Utils/Graphql';
-import { ProductI } from 'pages/MyFood/Utils/Interfaces';
 import { useParams } from 'react-router-dom';
 import { GET_PRODUCT_DETAIL } from '../Utils/Graphql';
 import useAddToCart from '../Utils/Hooks/useAddToCart';
@@ -55,7 +53,7 @@ function Detail() {
                   )
                } )
             }
-         </Grid> satu
+         </Grid> 
 
       
  

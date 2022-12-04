@@ -1,10 +1,11 @@
 import { gql, useMutation } from '@apollo/client'
 import { Warning } from '@mui/icons-material'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, InputLabel, Stack, TextField } from '@mui/material'
-import { StateValueContext } from 'Common/ContextApi'
-import { useContext } from 'react'
+import {GET_ALL_USER} from 'pages/ProfileCreator/Utils/Graphql'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { useSetRecoilState } from 'recoil'
+import { isLogined } from 'SetUp/StateManagement/Store'
 
 type Props = {
     isDeleteOpen : boolean,
@@ -20,22 +21,30 @@ const DeleteQuery = gql`
 
 const DialogDelete = (props: Props) => {
     const {watch,register,reset} = useForm()
-    const {dispatch} = useContext(StateValueContext)
-    const [Delete,{data,error,loading}] = useMutation(DeleteQuery)
+    const setLogin = useSetRecoilState(isLogined)
+    const [Delete,{data,error,loading}] = useMutation(DeleteQuery,{
+        refetchQueries :[
+            {query:GET_ALL_USER},
+            "getUser"
+        ]
+    })
     const navigate = useNavigate()
         const isUsername = watch() 
         console.log(isUsername,"dari dialog delete" );
 
-        const onClickDelete = async () =>{
+        const onClickDelete = () =>{
             try {
-                await Delete()
-                if(error) throw Error
+                 Delete()
+                    .then((result) =>{
+                        
+                        if(result.errors) throw Error
+                        props.setClose()
+                        reset()
+                        setLogin(false)
+                        navigate('/home')
+                    } )
                 
                 
-                props.setClose()
-                reset()
-                dispatch({type:"IS_LOGINED",payload:false})
-                navigate('/home')
                 
             } catch (err) {
                     console.log(err);

@@ -24,10 +24,10 @@ const useStyles = makeStyles() ((theme) =>{
         fontSize:"1rem",
 
       },
-      button:{
-        width:"6rem",
-        margin :"0 auto"
-      }
+      // button:{
+      //   width:"6rem",
+      //   margin :"0 auto"
+      // }
     }
 })
 export default useStyles

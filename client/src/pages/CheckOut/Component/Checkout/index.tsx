@@ -1,7 +1,7 @@
 import { ArrowBack } from '@mui/icons-material';
 import { Box, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
-import FormCheckOut from '../FormCheckOut';
+import FormPayment from '../FormPayment';
 import ProductCheckOut from '../ProductCheckOut';
 import useStyles from './Style';
 
@@ -15,7 +15,7 @@ function Checkout() {
 
         <Box className={classes.mainContainer}> 
             <Box className={classes.mainContainerForm} > 
-            < FormCheckOut />
+            < FormPayment />
              </Box>
 
            <Box className={classes.mainContainerCheckOut}> 
