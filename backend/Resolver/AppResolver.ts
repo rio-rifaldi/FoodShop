@@ -49,11 +49,3 @@ export class AppResolver{
     }
 
 }
-// - list all product
-// - add product to charth ===> {
-//     desciption : productId => userchart(from jsonwebtoken)
-// }
-// - list chart 
-// - delete chart product
-// - icremnemt buying product (base product id)
-// - decrement buying product (base product id)
