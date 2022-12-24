@@ -6,6 +6,8 @@ export const GET_ALL_PRODUCT = gql`
         _id
         name
         price
+        rating
+        sold
         image {
         url
         }

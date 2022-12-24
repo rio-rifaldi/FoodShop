@@ -5,23 +5,23 @@ import { Field, ObjectType } from "type-graphql";
 export class imagesType{
     
     @Field()
-    @Prop()
+    @Prop({default : ""})
     public public_id : string
     
     @Field()
-    @Prop()
+    @Prop({default : ""})
     public url: string
 
     @Field()
-    @Prop()
+    @Prop({default : ""})
     public secureUrl : string
 
     @Field()
-    @Prop()
+    @Prop({default : 0})
     public bytes : number
 
     @Field()
-    @Prop()
+    @Prop({default : ""})
     public extension : string
     
 

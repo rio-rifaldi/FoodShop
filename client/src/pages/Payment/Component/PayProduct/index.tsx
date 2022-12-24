@@ -1,27 +1,23 @@
-import { ArrowBack } from '@mui/icons-material';
-import { Box, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
-import FormPayment from '../../Utils/FormPayment';
-import ProductCheckOut from '../../Utils/ProductCheckOut';
-import useStyles from './Style'
+import { Box, Button, Checkbox, FormControlLabel } from '@mui/material';
+import { useState } from 'react';
+import PaymentInformation from '../PaymentInformation';
+import ProductConfirm from '../ProductConfirm';
+import useStyles from './Style';
 
 function PayProduct() {
     const {classes} = useStyles();
+    const [isChecked, setIsChecked] = useState(false)
   return (
-    <Box mt={10}> 
-        <Link to={'/checkOut'}  tabIndex={-1} style={{textDecoration:"unset"}}> 
-           <Button variant='outlined' className={classes.buttonBack} startIcon={< ArrowBack sx={{color :"#353945"}} />}> Go back </Button> 
-         </Link>
+    <Box sx={{maxWidth:"52rem",margin:"0 auto"}} > 
+        < PaymentInformation />
+          <Box className={classes.mainContainerCheckOut}> 
+              < ProductConfirm />
+            </Box> 
+      
+        < FormControlLabel control={<Checkbox checked={isChecked} color="secondary" size='small'/> } label="please check your payment and address.check this if everything is correct" onChange={() => setIsChecked((prev) => !prev )} className={classes.checkBox} />
 
-        <Box className={classes.mainContainer}> 
-            <Box className={classes.mainContainerForm} > 
-                < FormPayment />
-             </Box>
 
-           <Box className={classes.mainContainerCheckOut}> 
-                < ProductCheckOut />
-             </Box> 
-        </Box>
+      <Button  variant='contained' size="small" color="secondary" sx={{width:"90%",margin:"0 auto",borderRadius:".4rem",display:"block"}} disabled={!isChecked && true }> Order Now </Button>
      </Box>
   )
 }

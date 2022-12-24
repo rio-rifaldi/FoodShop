@@ -5,8 +5,8 @@ const useStyles = makeStyles() ((theme) =>{
         listBillBox :{
             margin :"1.5rem 1rem",
             display :"flex",
+            maxWidth :"40rem",
             flexDirection :"column",
-            // width :"100%",
             gap :".7rem",
             [theme.breakpoints.up('sm')]:{
               margin :"1.5rem 1.7rem",
@@ -64,6 +64,13 @@ const useStyles = makeStyles() ((theme) =>{
             [theme.breakpoints.up('sm')]:{
               margin :".2rem 1.7rem",
               marginTop:".7rem",
+            }
+          },
+          cardContainer:{
+            display:"grid",
+            gridTemplateColumns:"repeat(1,1fr)",
+            [theme.breakpoints.up(768)]:{
+              gridTemplateColumns:"repeat(2,1fr)"
             }
           }
     }

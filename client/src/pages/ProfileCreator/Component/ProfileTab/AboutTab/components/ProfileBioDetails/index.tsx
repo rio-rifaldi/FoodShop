@@ -1,11 +1,9 @@
-import { gql, useQuery } from '@apollo/client'
 import { Edit, Report } from '@mui/icons-material'
 import { Box, Button, Divider, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { refetchState } from 'SetUp/StateManagement/Store'
 import useStyles from './Style'
-import DialogDelete from './utils/DialogDelete'
 import DialogUpdate from './utils/DialogUpdate'
 
 interface Props {
@@ -22,6 +20,7 @@ const ProfileBioDetails = (props: Props) => {
     const [isUpdateOpen, setIsUpdateOpen] = useState<boolean>(false)
     const {classes} = useStyles()
     let data = user?.data?.getUser
+    let dataDetail = user?.data?.getUser.UserDetail
     let loading = user?.loading
 
     const {setOpen} = props.delete
@@ -55,25 +54,25 @@ const ProfileBioDetails = (props: Props) => {
 
                     <Box className={classes.boxField} my=".9rem"> 
                         <Typography className={classes.titleField}  > Phone number </Typography>    
-                        <Typography className={classes.valueField} > {!loading? data?.numberTelp : "..."}  </Typography>
+                        <Typography className={classes.valueField} > {!loading ? dataDetail?.numberTelp : "..."}  </Typography>
                         </Box>
                         < Divider />
 
                     <Box  className={classes.boxField} my=".9rem"> 
                         <Typography className={classes.titleField} > Birth Day </Typography>    
-                        <Typography className={classes.valueField} > {!loading ? data?.birthDay : "..."}  </Typography>
+                        <Typography className={classes.valueField} > {!loading ? dataDetail?.birthDay : "..."}  </Typography>
                 </Box>
                         < Divider />
                         
                     <Box className={classes.boxField} my=".9rem"> 
                         <Typography className={classes.titleField} > Country </Typography>    
-                        <Typography className={classes.valueField} > {!loading ? data?.country : "..."}  </Typography>
+                        <Typography className={classes.valueField} > {!loading ? dataDetail?.country : "..."}  </Typography>
                 </Box>
                         < Divider />
                         
                     <Box sx={{margin:".9rem 0"}}> 
                         <Typography className={classes.titleField}  > Address </Typography>    
-                        <Typography className={classes.valueField} >{!loading ? data?.address : "..."} </Typography>
+                        <Typography className={classes.valueField} >{!loading ? dataDetail?.address : "..."} </Typography>
                         </Box>
                         < Divider />
 

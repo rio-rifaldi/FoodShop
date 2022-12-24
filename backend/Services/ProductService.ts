@@ -273,8 +273,7 @@ class ProductService{
                 image 
             }
         })
-        console.log(image);
-     console.log(productUpdated);
+
         if(productUpdated.modifiedCount !== 0){
             return true
         }else{

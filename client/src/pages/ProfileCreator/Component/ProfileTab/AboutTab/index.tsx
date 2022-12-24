@@ -15,17 +15,21 @@ const AboutTab = (props: Props) => {
     const dataUser = useRecoilValue(refetchState)
     const setOpen = () => setIsDeleteOpen(true);
     const setClose = () => setIsDeleteOpen(false) 
-    let data = dataUser?.data?.getUser
+    let userDetail = dataUser?.data?.getUser.UserDetail
+    let username = dataUser?.data?.getUser.username
     let loading = dataUser?.loading
+    console.log(userDetail?.address);
     return (
         <>
-              < DialogDelete isDeleteOpen={isDeleteOpen} username={loading ? "": data?.username} setClose={setClose}/>  
+              < DialogDelete isDeleteOpen={isDeleteOpen} username={loading ? "": username} setClose={setClose}/>  
         {
-            data?.address ?(
+            userDetail?.address ?
+            (
                 < ProfileBioDetails delete={{setOpen}} />
-                ):(
-                < EmptyBioDetails delete={{setOpen}}/>
-            )
+                ):
+                (
+                 < EmptyBioDetails delete={{setOpen}}/>
+                )
         }
         </>
     )

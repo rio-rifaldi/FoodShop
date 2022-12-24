@@ -1,6 +1,8 @@
 import { gql, useMutation } from '@apollo/client'
 import { AttachMoney, Close, PhotoCamera, Send, Upload } from '@mui/icons-material'
 import { Backdrop, Box, Button, Chip, CircularProgress, IconButton, InputLabel, Stack, TextField, Typography } from '@mui/material'
+import useOnSelectImage from 'pages/AddProduct/Utils/Functions/useOnSelectImage'
+import onSelectImage from 'pages/AddProduct/Utils/Functions/useOnSelectImage'
 import { AddImage, PRODUCT_MUTATION } from 'pages/AddProduct/Utils/Graphql'
 import { dataInput, formData } from 'pages/AddProduct/Utils/Interfaces'
 import { ChangeEvent, useCallback, useState } from 'react'
@@ -26,13 +28,13 @@ interface outI{
 
 
 const Addproduct = (props: Props) => {
-  const [selectedImage, setSelectedImage] = useState<string[]>([])
-  const [image, setImage] = useState<File[] >([])
+
   const {register, handleSubmit,reset,watch} = useForm<formData>()
   const [taste, setTaste] = useState<string[]>([])
   const [AddProduct,{loading}] = useMutation(PRODUCT_MUTATION)
   const [AddImageProduct,{data:dataImage,loading:imageL,called}] = useMutation<outI>(AddImage)
   const navigate = useNavigate()
+  const {image,onSelectFile,selectedImage,setImage,setSelectedImage} = useOnSelectImage()
 
   const formHadler = handleSubmit(async (data,e)  =>{
     e?.preventDefault()
@@ -45,8 +47,7 @@ const Addproduct = (props: Props) => {
         taste : taste,
         description : data.descriptionProduct
     }
-    console.log('fetched');
-
+    
     AddProduct({variables : {imageType : dataImage?.addImageProductSelf ,input}})
     .then((result) =>{
 
@@ -59,41 +60,22 @@ const Addproduct = (props: Props) => {
     } )  
 
     } )
-    const readFileAsUrl = (file:File) =>{
-      return new Promise<string>((resolve,reject) =>{
+
+    const readerFile = (file:File) => {
+      return new Promise<string>((resolve,reject) => {
         const reader = new FileReader()
+
         reader.readAsDataURL(file)
-        reader.onload = () => {
+        reader.onloadend = () => {
           if(reader.result){
-            // console.log(reader.result)
             resolve(reader.result as string)
           }
-  
         }
-        return resolve
       })
-    }  
-
-
-    const onSelectFile =  (e:ChangeEvent<HTMLInputElement>) => {
-      if(e.target.files !== null){
-        let files = e.target.files
-        setImage((prev) =>  [...prev,...files])
-        
-        for(let i = 0; i < files.length ; i++){
-          const reader = new FileReader()
-          reader.readAsDataURL(files[i])
-          reader.onloadend = () => {
-            if(reader.result){
-              setSelectedImage((prev) => [...prev,reader.result as string] )
-
-              }
-            }
-          }
-       
-      }
-    
     }
+
+
+
     const onKeyDownTaste = useCallback((e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement> ) =>{
       if(e.key !== "Enter") return
       let value = (e.target as HTMLInputElement).value 
@@ -102,6 +84,7 @@ const Addproduct = (props: Props) => {
         (e.target as HTMLInputElement).value = ''
       }
     },[taste] )
+
     const onClickTaste = (e:React.MouseEvent<HTMLButtonElement, MouseEvent> ) =>{
       const Watch = String(watch('tasteProduct')) 
       if(Watch !== ''){
@@ -119,19 +102,23 @@ const Addproduct = (props: Props) => {
        "#FCF6D8",
        "#EDFCFB",
     ]
-    const DeleteImage =  (fileImage:File) => {
+    const DeleteImage =  async (fileImage:File) => {
       const newFile = image.filter((images) =>{
         return images.size !== fileImage.size
       } )
-        setImage(newFile)
-
+      const url = await readerFile(fileImage)
+      setImage(newFile)
+      setSelectedImage((prev) => prev.filter((img) => img !== url))
+      
+      
     }
     const UploadImage = async () =>{
       const result = await AddImageProduct({variables:{file : image}})
 
     };
-    console.log(image)
-    console.log(dataImage)
+    
+    console.count("render")
+    
   return (
     <>
         <Backdrop open={loading ? true : false}>
@@ -141,7 +128,7 @@ const Addproduct = (props: Props) => {
       <Box mt={7}  sx={{margin :{xsMenu : "5rem 1rem", md:"5rem auto"},maxWidth:"45rem"}}> 
         <Typography sx={{textAlign:"center",fontWeight:"500",fontFamily:"Alice",fontSize:"1.5rem",my:"1.2rem"}}> Add Product </Typography>
           <form
-           autoComplete='off'
+             autoComplete='off'
             onSubmit={formHadler}
             onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}
             > 
@@ -173,7 +160,7 @@ const Addproduct = (props: Props) => {
                     <input type="file" multiple hidden onChange={onSelectFile} />
                     < PhotoCamera />
                  </IconButton>
-                   <IconButton disabled={selectedImage.length === 0 || dataImage ? true: false} onClick={UploadImage}> 
+                   <IconButton disabled={image.length === 0 || dataImage ? true: false} onClick={UploadImage}> 
                       < Upload />
                    </IconButton>
                  </Box>

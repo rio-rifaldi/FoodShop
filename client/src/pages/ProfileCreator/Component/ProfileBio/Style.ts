@@ -32,21 +32,16 @@ const useStyles = makeStyles() ((theme) =>{
         },
         profileNameWrap:{
             display:"flex",
-            flexDirection:"column",
-            [theme.breakpoints.up(460)]:{
-                flexDirection:"row",
-                alignItems:"center",
-               gap :".8rem"
-            }
+            flexDirection:"row",
+            alignItems:"center",
+            gap :".6rem"
+            
         },
         name :{
             color :"neutrals.black",fontFamily:"Alice",fontSize:"1.3rem"
         },
         address :{
             fontSize :".72rem",fontFamily:"Poppins",color:"neutrals.grey",
-            [theme.breakpoints.between(0,460)]:{
-                marginBottom:".3rem"
-            }
         },
         iconLocation:{
             verticalAlign:"top",fontSize:".9rem",color :"neutrals.grey"

@@ -17,11 +17,12 @@ class UpdateUserDetailInfoService{
         try {
     
             const verify = verifyToken(token,secretE.secretToken) as Jwt.JwtPayload
-    
             const data = {
                 aboutMe,address,birthDay,numberTelp,profession,country
             }
-            const user = await userModel.updateOne({_id : verify.data.ID},data)
+            const user = await userModel.updateOne({_id : verify.data.ID},{
+                $set:{UserDetail:data}
+            })
             
             if(user.modifiedCount !== 0){
                 return await userModel.findOne({_id : verify.data.ID})  as userDataSchema

@@ -2,17 +2,16 @@ import { ApolloServer, ExpressContext } from 'apollo-server-express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import * as bodyParser from 'body-parser'
 import express from 'express';
 import { graphqlUploadExpress } from 'graphql-upload-ts';
 import { JwtPayload } from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
+import { AppResolver } from './Resolver/AppResolver';
 import { ProductResolver } from './Resolver/ProductResolver';
 import { UserResolver } from './Resolver/userResolver';
 import { generateTimeAccess, generateToken, secretE, verifyToken } from './utils/Functions';
-import { AppResolver } from './Resolver/AppResolver';
 
 
 dotenv.config({path:__dirname +'/.env' })

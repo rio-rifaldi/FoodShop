@@ -1,21 +1,13 @@
-import { getModelForClass, prop, Prop } from "@typegoose/typegoose";
-import mongoose, { Date } from "mongoose";
+import { prop, Prop, Ref } from "@typegoose/typegoose";
+import { Date } from "mongoose";
 import { Field, ID, ObjectType } from "type-graphql";
+import { ProductType } from "./ProductSchema";
 
 @ObjectType()
 export class ShopChartType{
     @Field(() => ID,{nullable:true})
     @prop()
-    public productId: mongoose.Types.ObjectId
-
-    @Field(() => String,{nullable:true})
-    public name : string
-
-    @Field(() => Number,{nullable:true})
-    public price : number
-
-    @Field(() => String,{nullable:true} )
-    public image : string
+    public productId: string
 
     @Field(() => Number)
     @Prop()
@@ -25,8 +17,6 @@ export class ShopChartType{
     @Prop()
     public description : string
 
-    @Prop()
-    public owner : string
 
     @Prop({type:Date,default:new Date()})
     public createdAt : Date
@@ -34,6 +24,9 @@ export class ShopChartType{
     @Prop({default : null})
     public modifiedAt : Date | null
 
+    @Field(() => ProductType,{nullable:true} )
+    @Prop({ref:() => ProductType,type: ProductType})
+    public product : Ref<ProductType>
+
 
 }
-export const  ShopChartModel = getModelForClass(ShopChartType,{options:{ customName:"shopCart"}})

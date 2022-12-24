@@ -20,10 +20,10 @@ return (
      </Box>
 
           <Slider {...settings}>  
-              < SimpleCard creator image={topoki} alt='topoki' name={'Topoki dffd fdfdf fdfdfdsssssssss'} labelRating={297}  rating={3.5} />
-              < SimpleCard creator image={topoki} alt='topoki' name={'Topoki dffd fdfdf fdfdfdsssssssss'} labelRating={297}  rating={3.5} />
-              < SimpleCard creator image={topoki} alt='topoki' name={'Topoki dffd fdfdf fdfdfdsssssssss'} labelRating={297}  rating={3.5} />
-              < SimpleCard creator image={topoki} alt='topoki' name={'Topoki dffd fdfdf fdfdfdsssssssss'} labelRating={297}  rating={3.5} />
+              < SimpleCard creator image={topoki} alt='topoki' name={'Topoki dffd fdfdf fdfdfdsssssssss'} labelRating={297}  rating={3.5} sold={0} />
+              < SimpleCard creator image={topoki} alt='topoki' name={'Topoki dffd fdfdf fdfdfdsssssssss'} labelRating={297}  rating={3.5} sold={0} />
+              < SimpleCard creator image={topoki} alt='topoki' name={'Topoki dffd fdfdf fdfdfdsssssssss'} labelRating={297}  rating={3.5} sold={0} />
+              < SimpleCard creator image={topoki} alt='topoki' name={'Topoki dffd fdfdf fdfdfdsssssssss'} labelRating={297}  rating={3.5} sold={0} />
               </Slider>
 
     <Box className={classes.container} mt={6} > 
@@ -33,10 +33,10 @@ return (
         </Link>
      </Box>
       <Slider {...settings}>  
-          < SimpleCard creator image={topoki} alt='topoki' name={'Topoki dffd fdfdf fdfdfdsssssssss'} labelRating={297}  rating={3.5} />
-          < SimpleCard creator image={topoki} alt='topoki' name={'Topoki dffd fdfdf fdfdfdsssssssss'} labelRating={297}  rating={3.5} />
-          < SimpleCard creator image={topoki} alt='topoki' name={'Topoki dffd fdfdf fdfdfdsssssssss'} labelRating={297}  rating={3.5} />
-          < SimpleCard creator image={topoki} alt='topoki' name={'Topoki dffd fdfdf fdfdfdsssssssss'} labelRating={297}  rating={3.5} />
+          < SimpleCard creator image={topoki} alt='topoki' name={'Topoki dffd fdfdf fdfdfdsssssssss'} labelRating={297}  rating={3.5} sold={0} />
+          < SimpleCard creator image={topoki} alt='topoki' name={'Topoki dffd fdfdf fdfdfdsssssssss'} labelRating={297}  rating={3.5} sold={0} />
+          < SimpleCard creator image={topoki} alt='topoki' name={'Topoki dffd fdfdf fdfdfdsssssssss'} labelRating={297}  rating={3.5} sold={0} />
+          < SimpleCard creator image={topoki} alt='topoki' name={'Topoki dffd fdfdf fdfdfdsssssssss'} labelRating={297}  rating={3.5} sold={0} />
           </Slider>
   </>
 )

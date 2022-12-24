@@ -25,7 +25,6 @@ const useStyles = makeStyles() ((theme) =>{
             border:`1px solid ${theme.palette.neutrals.veryYoungGrey}`,
             borderRadius:".5rem",
             padding:".4rem", 
-            maxWidth:"30rem"
           }
 
         },
@@ -42,7 +41,13 @@ const useStyles = makeStyles() ((theme) =>{
                 backgroundColor :theme.palette.myColor.greenTrans,
             }
         },
-       
+        checkBox:{
+          margin:"1rem 0",
+          color:theme.palette.neutrals.grey,
+          "& > span":{
+            fontSize:".8rem",
+          }
+        }
 
 
     }

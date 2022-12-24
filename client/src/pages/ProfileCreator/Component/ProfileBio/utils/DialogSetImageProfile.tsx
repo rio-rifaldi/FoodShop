@@ -34,13 +34,13 @@ const DialogSetImageProfile = (props: Props) => {
                 <Fab 
                 aria-label="upload picture"
                 component="label"
-                disabled={  image?.url === "" ? false : true}
+                disabled={  !(image?.url) ? false : true}
                 > 
                 <input type="file" hidden onChange={onAddImage} />
                 < PhotoCamera /> 
                 </Fab>
                 <Fab 
-                    disabled={  image?.url === "" ? true : false}
+                    disabled={  !(image?.url) ? true : false}
                     aria-label="update picture"
                     component="label"
                     > 
@@ -48,7 +48,7 @@ const DialogSetImageProfile = (props: Props) => {
                 < Edit /> 
                 </Fab>
                 <Fab 
-                    disabled={  image?.url === "" ? true : false}
+                    disabled={  !(image?.url) ? true : false}
                     onClick={onDeleteImage}
                 > 
                 < DeleteForever /> 

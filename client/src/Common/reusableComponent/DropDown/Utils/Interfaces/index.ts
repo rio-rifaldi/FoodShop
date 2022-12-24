@@ -5,7 +5,7 @@ export interface Props{
     menuList:string[]
     selectProps? :SelectProps<string> 
     inputLabelProps? :InputLabelProps
-    formGroupProps?  :FormControlProps
+    formGroupProps?  :FormControlProps 
     labelValue? :string,
     placeholder : string
   }

@@ -7,12 +7,15 @@ export const GET_ALL_USER = gql`
             username
             firstName
             lastName
-            country 
-            aboutMe 
-            profession
-            address
-            birthDay
-            numberTelp
+            UserDetail{
+                country 
+                aboutMe 
+                profession
+                address
+                birthDay
+                numberTelp
+                rating
+            }
 
             profileImage {
                 url

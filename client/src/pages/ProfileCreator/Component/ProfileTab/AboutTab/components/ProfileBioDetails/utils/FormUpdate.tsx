@@ -27,6 +27,7 @@ const FormUpdate = (props: Props) => {
 
     const User = useRecoilValue (refetchState)
     let data = User?.data
+    let dataDetail = User?.data?.getUser.UserDetail
 
     const formHadler = handleSubmit(async (data,e) =>{
       
@@ -63,7 +64,7 @@ const FormUpdate = (props: Props) => {
          size='small'
          fullWidth
          required
-         defaultValue={data?.getUser?.numberTelp}
+         defaultValue={dataDetail?.numberTelp}
          placeholder='+39 4343 2842 3434'
          type={'tel'}
          {...register('numberTelp')}
@@ -76,7 +77,7 @@ const FormUpdate = (props: Props) => {
        < TextField 
          size='small'
          fullWidth
-         defaultValue={data?.getUser?.birthDay}
+         defaultValue={dataDetail?.birthDay}
          placeholder='2004-06-13'
          type={'date'}
          {...register('birthDay')}
@@ -90,7 +91,7 @@ const FormUpdate = (props: Props) => {
           < TextField 
             size='small'
             fullWidth
-            defaultValue={data?.getUser?.profession}
+            defaultValue={dataDetail?.profession}
             required
             placeholder='I am A'
             {...register('profession')}
@@ -105,7 +106,7 @@ const FormUpdate = (props: Props) => {
             size='small'
             fullWidth
             required
-            defaultValue={data?.getUser?.country}
+            defaultValue={dataDetail?.country}
             placeholder='jakarta, indonesia'
             {...register('country')}
             InputProps={{
@@ -121,7 +122,7 @@ const FormUpdate = (props: Props) => {
            fullWidth
            placeholder='jl ahmad yani no 27'
            required
-           defaultValue={data?.getUser?.address}
+           defaultValue={dataDetail?.address}
            multiline
            rows={3}
            {...register('address')}
@@ -136,7 +137,7 @@ const FormUpdate = (props: Props) => {
          multiline
          placeholder='hello my name is ....'
          required
-         defaultValue={data?.getUser?.aboutMe}
+         defaultValue={dataDetail?.aboutMe}
          rows={4}
          {...register('aboutMe')}
        />

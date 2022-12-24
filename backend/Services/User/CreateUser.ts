@@ -1,5 +1,5 @@
 import { ExpressContext } from "apollo-server-express"
-import { UserDetailBlank, userModel } from "../../dataSchema/UserSchema"
+import { userModel } from "../../dataSchema/UserSchema"
 import { UserInputAuth } from "../../TypeDef/InputType/UserInputType"
 import * as bcrypt from 'bcrypt'
 import cloudinary from "../../Config/Cloudinary"
@@ -20,8 +20,7 @@ class CreateUserService {
                 firstName,
                 lastName,
                 email,
-                password: hash_password,
-                ...UserDetailBlank
+                password: hash_password
             })
             cloudinary.v2.api.create_folder(`/FoodShop/${username}`)
             if(req.cookies.Token && req.cookies.RefreshToken){

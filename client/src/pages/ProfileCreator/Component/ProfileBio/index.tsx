@@ -1,4 +1,4 @@
-import { Assessment, Build, LocationOn, PhotoCamera, Shop2 } from '@mui/icons-material'
+import { Assessment, Build, LocalShipping, LocationOn, PhotoCamera, Shop2 } from '@mui/icons-material'
 import { Box, Button, IconButton, Rating, Skeleton, Tooltip, Typography, useMediaQuery } from '@mui/material'
 import profileImage from 'assets/images/svg/blank-profile-picture.svg'
 import { useState } from 'react'
@@ -21,6 +21,8 @@ const ProfileBio =  () => {
     const dataUser = useRecoilValue(refetchState);
     let user = dataUser?.data?.getUser 
     let image = dataUser?.data?.getUser.profileImage 
+    let details = dataUser?.data?.getUser.UserDetail
+    console.log(image?.url);
     
     return (
         <>  
@@ -43,7 +45,6 @@ const ProfileBio =  () => {
             </Box>
             
         <Box sx={{width:{ xsMenu : "100%", sm:"70%"}}}> 
-            <Box className={classes.profileBioWrap} >
                 <Box className={classes.profileNameWrap}> 
                     {
                         user ?(
@@ -54,35 +55,32 @@ const ProfileBio =  () => {
                     }  
                     {
                         user ?(
-                            <Typography className={classes.address}> < LocationOn className={classes.iconLocation}/> {user.country} </Typography>
+                            <Typography className={classes.address}> < LocationOn className={classes.iconLocation}/> {details?.country} </Typography>
                             ):(
                                 <Skeleton variant='rectangular' width={60} animation='wave'/>
                                 
                         )
                     }
                 </Box>   
-                <Link to={'message'} style={{textDecoration:"none",color:"unset"}}>
-                        < MessageIcon />
-                </Link>
-                </Box>
+       
             {
                 user ?(
-                    <Typography className={classes.profession}>  { user.profession}</Typography>
+                    <Typography className={classes.profession}>  { details?.profession}</Typography>
                     ):(   
                         <Skeleton variant='rectangular' width={80} height={17} animation='wave'/>
             )
             }
             < Rating 
                 readOnly
-                value={0}
+                value={!(details?.rating) ? 0 : details.rating} 
                     sx={{margin:".8rem 0"}}
             />
-            <Typography className={classes.ratingValue}> 9  </Typography>
+            <Typography className={classes.ratingValue}>{!(details?.rating) ? 0 : details.rating} </Typography>
 
             {
                 user ? (
                 <Typography  className={classes.description}> 
-                    {  user.aboutMe}
+                    {  details?.aboutMe}
                 </Typography>
                 ):(
                     <>
@@ -105,12 +103,20 @@ const ProfileBio =  () => {
                         }    
                     
                 </Box>
-                    
-                <Tooltip title="Accout">  
-                    <IconButton onClick={() => setIsOpenDialog(true)} > 
-                            < Build />
-                    </IconButton>
+                <Box >
+                    <Tooltip title="Accout">  
+                        <IconButton onClick={() => setIsOpenDialog(true)} > 
+                                < Build />
+                        </IconButton>
                     </Tooltip>
+                    <Link to='history' tabIndex={-1}>  
+                        <Tooltip title="Order history" sx={{ml:1}}>  
+                            <IconButton  > 
+                                    < LocalShipping />
+                            </IconButton>
+                        </Tooltip>
+                    </Link>
+                </Box>
             </Box>
         </Box>
             </Box>

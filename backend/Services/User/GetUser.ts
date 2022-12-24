@@ -13,10 +13,11 @@ class GetUserService{
        try {
            const {data} = verifyToken(token,secretE.secretToken) as Jwt.JwtPayload
    
-                   const user = await userModel.findOne({_id:data.ID}).populate("product","","product")
-                   return user
-               
-   
+            const user = await userModel.findOne({_id:data.ID}).populate("product","","product")
+            console.clear();
+            console.log(user)
+            return user     
+
            
        } catch (err) { 
            console.log(err)

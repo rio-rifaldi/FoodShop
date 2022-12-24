@@ -6,11 +6,7 @@ import { userDataSchema } from "./UserSchema";
 
 
 @ObjectType()
-// @modelOptions({
-//     schemaOptions:{
-//         _id : false
-//     }
-// })
+
 export class ProductType{
     @Field()
     public _id : String
@@ -28,11 +24,11 @@ export class ProductType{
     public stock : Number  
 
     @Field(() => Number)
-    @prop({required:false})
+    @prop({required:false,default:0})
     public rating : Number  
 
     @Field(() => Number)
-    @prop({required:false,default : 0})
+    @prop({required:false,default :0})
     public sold : Number  
 
     @Field(() => String)
@@ -54,8 +50,10 @@ export class ProductType{
     
     @prop()
     public owner : string
+
     @prop({type : Date,default : new Date()})
     public createdAt : Date
+
     @prop({default : null})
     public modifiedAt : Date | null
 

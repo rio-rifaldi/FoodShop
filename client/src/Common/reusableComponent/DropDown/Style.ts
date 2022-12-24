@@ -4,7 +4,7 @@ const useStyles = makeStyles() ((theme) =>{
     return{
         selectTag :{
             borderRadius :".7rem",
-            height:"2.8rem",
+            height:"2.4rem",
             "&.Mui-focused .MuiOutlinedInput-notchedOutline" :{
               border : `1.6px solid ${theme.palette.myColor.green}` 
             },

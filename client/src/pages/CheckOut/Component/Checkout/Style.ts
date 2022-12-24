@@ -19,13 +19,31 @@ const useStyles = makeStyles() ((theme) =>{
             marginTop:"2rem"
           }
         },
+        title:{
+          fontFamily :"Alice",
+          color : theme.palette.neutrals.black,
+          textAlign:"left",
+          fontSize:"2rem",
+          margin:"0 1rem"
+        },
+        paragraf:{
+          color :theme.palette.neutrals.grey,
+          fontSize:".86rem",
+          fontFamily:"Poppins",
+          textAlign :"left",
+          margin:"0 1rem"
+        },
         mainContainerCheckOut:{
           width:"100%",
-          [theme.breakpoints.up('md')]:{
-            border:`1px solid ${theme.palette.neutrals.veryYoungGrey}`,
-            borderRadius:".5rem",
-            padding:".4rem", 
-            maxWidth:"30rem"
+          border :`2px solid ${theme.palette.neutrals.veryYoungGrey}`,
+          borderRadius :".6rem",
+          
+          display:"flex",
+          flexDirection:"column",
+          [theme.breakpoints.up(400)]:{
+            maxWidth:"40rem",
+            margin :"1rem auto",
+            padding:"1rem",
           }
 
         },
@@ -42,6 +60,21 @@ const useStyles = makeStyles() ((theme) =>{
                 backgroundColor :theme.palette.myColor.greenTrans,
             }
         },
+        addressBox:{
+          margin:"0 .6rem",
+          display : "grid",
+          gap: ".3rem",
+          justifyContent:"center",
+
+          [theme.breakpoints.up(700)]:{
+            gap: ".8rem",
+            gridTemplateColumns:"repeat(2,1fr)"
+          },
+          [theme.breakpoints.up(960)]:{
+            gridTemplateColumns:"repeat(4,1fr)"
+          }
+        },
+  
         
 
 

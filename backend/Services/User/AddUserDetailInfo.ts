@@ -19,7 +19,9 @@ class AddUserDetailInfoService{
             const verify = verifyToken(token,secretE.secretToken) as Jwt.JwtPayload
             if(!verify) throw Error
             const userDetail = await userModel.updateOne({_id : verify.data.ID},{
-                aboutMe,address,birthDay,numberTelp,profession,country
+               $set:{
+                UserDetail : { aboutMe,address,birthDay,numberTelp,profession,country}
+               }
             })
 
             if(userDetail.modifiedCount === 0) throw Error('user not added')

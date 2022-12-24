@@ -28,12 +28,14 @@ export interface BioDetail {
 const mutationUserDetail = gql`
     mutation addUserDetailInfo($input: UserInputDetail!){
     addUserDetailInfo(input: $input) {
-      country
-      profession
-      numberTelp
-      birthDay
-      address
-      aboutMe
+      UserDetail{
+        country
+        profession
+        numberTelp
+        birthDay
+        address
+        aboutMe
+      }
     }
 }
 `
@@ -50,6 +52,7 @@ const FormAddMoreBio = (props: Props) => {
         e?.preventDefault()
 
         try {
+          console.log(data);
           const user = await Add({
             variables :{
               input : data

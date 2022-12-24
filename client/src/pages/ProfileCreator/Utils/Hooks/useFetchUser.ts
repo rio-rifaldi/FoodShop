@@ -11,9 +11,8 @@ const useFetchUser = () => {
     const User = useQuery<userI>(GET_ALL_USER,{
         fetchPolicy :"cache-and-network"
     })
-    const {data,loading,refetch} = User
+    const {data,loading,refetch,error} = User
         const setRefetch = useSetRecoilState<dataUserI | null>(refetchState)
-
         useEffect(() => {
             if(data && !loading ){
                 setRefetch({

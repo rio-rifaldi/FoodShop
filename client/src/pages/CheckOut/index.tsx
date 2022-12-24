@@ -1,13 +1,12 @@
 
 import Checkout from './Component/Checkout'
 
-type Props = {}
 
-function CheckOut({}: Props) {
+
+function CheckOut() {
   return (
-    <>
        < Checkout />
-    </>
+
   )
 }
 

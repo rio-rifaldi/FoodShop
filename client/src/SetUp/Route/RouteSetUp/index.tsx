@@ -23,6 +23,7 @@ const UpdateProduct = lazy(() => import("pages/MyFood/Components/UpdateProduct")
 const AddProduct = lazy(() => import("pages/AddProduct"))
 const Productfood = lazy(() => import("pages/MyFood"))
 const Message = lazy(() => import("pages/Message/index"))
+const HistoryUser = lazy(() => import('pages/HistoryUser'))
 
 
 function RouteSetUp() {
@@ -48,6 +49,7 @@ function RouteSetUp() {
                       < Route path='myFood/detail/:productId' element={<FoodDetailCreator/>}/>
                       < Route path='myFood/update/:productId' element={<UpdateProduct/>}/>
                       < Route path='/menu/:productId' element={<FoodDetail  />}/>
+                      < Route path='/profile/history' element={<HistoryUser  />}/>
                    {/* </Route> */}
                   {/* <Route element={< AppwithOutNav />}>  */}
                          < Route path='profile/message' element={<Message/>}/>

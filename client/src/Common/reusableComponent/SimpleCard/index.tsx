@@ -8,7 +8,7 @@ import { Props } from './Utils/Interfaces'
 
 
 function SimpleCard(props:Props) {
-  let {image,alt,price,rating,labelRating,name,creator,id} = props
+  let {image,alt,price,rating,labelRating,name,creator,id,sold} = props
   const {classes} = useStyles()
   const navigate = useNavigate()
   const gotoDetail = () => {
@@ -25,7 +25,7 @@ function SimpleCard(props:Props) {
           component='img'
           image={image}
           alt={alt}
-          sx={{ height:"6.6rem", objectFit:"scale-down",margin : "0",minHeight:"8rem" }}     
+          sx={{ height:"6.6rem", objectFit:"cover",margin : "0",minHeight:"8rem" }}     
           />
         <CardContent   > 
 
@@ -38,18 +38,19 @@ function SimpleCard(props:Props) {
                 readOnly
                 sx={{color : "myColor.green",fontSize:".9rem"}}
               />
-              <Typography sx={{fontFamily : "Poppins",color : "#23262F",fontSize:"clamp(0.5rem, 0.4068rem + 0.3243vw, 0.65rem)"}}>{labelRating} Reviews</Typography>
+              <Typography sx={{fontFamily : "Poppins",color : "#23262F",fontSize:"clamp(0.5rem, 0.4068rem + 0.3243vw, 0.65rem)"}}>{rating} Reviews</Typography>
             </Stack>  
             {
               price &&(
 
                 <Typography sx={{color : "myColor.green",fontFamily : "Alice",fontSize:"1.3rem"}}>${price}</Typography>
               )
-            }          
+            }  
+                    
+          <Typography sx={{fontSize:".7rem",float:"right",color:"neutrals.grey"}}> sold {sold} </Typography>
           </CardContent>
         
       </CardActionArea>
-
 
     </Card>
   </>

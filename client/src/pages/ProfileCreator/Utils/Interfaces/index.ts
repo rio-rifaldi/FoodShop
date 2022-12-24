@@ -4,12 +4,15 @@ export interface userI {
         lastName :string,
         email : string,
         username: string
-        country : string,
-        birthDay : string,
-        numberTelp : string,
-        address :string,
-        aboutMe : string,
-        profession :string,
+        UserDetail:{
+          country : string,
+          birthDay : string,
+          numberTelp : string,
+          address :string,
+          aboutMe : string,
+          profession :string,
+          rating:number
+        }
         profileImage :{
             url : string,
             secureUrl : string

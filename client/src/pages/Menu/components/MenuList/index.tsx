@@ -16,7 +16,7 @@ function MenuList() {
                     return(
 
                 <Grid item >  
-                    < SimpleCard image={product.image[0].url} alt={product.name} name={product.name} labelRating={297} price={product.price} rating={3.5} id={product._id}/>
+                    < SimpleCard image={product.image[0].url} alt={product.name} name={product.name} labelRating={297} price={product.price} rating={product.rating} id={product._id} sold={product.sold}/>
                 </Grid>
 
                     )

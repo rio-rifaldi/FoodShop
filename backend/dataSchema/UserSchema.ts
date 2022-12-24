@@ -2,7 +2,9 @@ import { ProductType } from './ProductSchema';
 import { getModelForClass, modelOptions, prop, Ref } from "@typegoose/typegoose";
 import { Field, ID, ObjectType } from "type-graphql";
 import { imagesType } from '../TypeDef/imageType';
-import { ShopChartType } from '../TypeDef/shopCartType';
+import { ShopChartType } from './shopCartType';
+import { UserDetail } from './UserDetail';
+import { userPayment } from './UserPayment';
 
 @ObjectType()
 
@@ -35,68 +37,31 @@ export class userDataSchema {
     
     // userDetail
 
-
-    @Field({nullable:true})
+    @Field(() => UserDetail,{nullable:true})
     @prop({required:false})
-    public numberTelp : String
+    public UserDetail : UserDetail
+   
 
-    @Field({nullable:true})
-    @prop({required:false})
-    public birthDay : String
+    // payment User
 
-    @Field({nullable:true})
-    @prop({required:false})
-    public profession : String
-
-    @Field({nullable:true})
-    @prop({required:false})
-    public address : String
-
-    @Field({nullable:true})
-    @prop({required:false})
-    public rating : number
-
-    @Field({nullable:true})
-    @prop({required:false})
-    public country : String
-
-    @Field({nullable:true})
-    @prop({required:false})
-    public aboutMe : String
-
+    @Field(() => [userPayment])
+    @prop({required:false,type: [userPayment],default:[]})
+    public payment : userPayment[]
+    
 
     //reference to product
 
     @Field(() => [ProductType],{nullable:true})
-    @prop({required:false,ref: () => ProductType,type: [ProductType] })
+    @prop({required:false,ref: () => ProductType,type: [ProductType],default:[] })
     public product : Ref<ProductType>[]
     
     // shpopping cart --> ref to productID
 
 
     @Field(() => [ShopChartType],{nullable:true})
-    @prop({required:false,type: [ShopChartType] })
+    @prop({required:false,type: [ShopChartType],default:[] })
     public shopCart : ShopChartType[]
 
-}
-
-export let UserDetailBlank ={
-    aboutMe : null,
-    address : null,
-    birthDay : null,
-    numberTelp : null,
-    profession : null,
-    rating: null,
-    country : null,
-    profileImage : {
-        url : "",
-        secureUrl : "",
-        bytes : 0,
-        public_id : "",
-        extension : ""
-    },
-    product :[],
-    shopCart : []
 }
 
 @ObjectType()

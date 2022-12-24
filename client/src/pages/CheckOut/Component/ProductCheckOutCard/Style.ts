@@ -3,15 +3,18 @@ import { makeStyles } from "tss-react/mui"
 const useStyles = makeStyles() ((theme) =>{
     return{
             mainContainer :{
-                display :"flex",
                 width : "100%",
                 padding:".7rem",
                 border :`1px solid ${theme.palette.neutrals.veryYoungGrey}`,
                 borderRadius:".7rem",
-                transform:"scale(.87)" 
+                transform:"scale(.87)" ,
+                
             },
+            imageAndNameContainer:{
+                display :"flex",
+            },  
             image:{
-                width :"9rem",
+                width :"6rem",
                 objectFit:"cover"
             },
             titleStack:{
@@ -28,7 +31,7 @@ const useStyles = makeStyles() ((theme) =>{
                 marginTop:".7rem"
             },
             productName:{
-                fontSize:"1.3rem",
+                fontSize:"1rem",
                 color :theme.palette.neutrals.black,
                 fontWeight:500,
                 fontFamily:"Alice",
@@ -38,6 +41,9 @@ const useStyles = makeStyles() ((theme) =>{
                 color : theme.palette.myColor.green,
                 fontWeight:500,
                 fontFamily:"Alice",
+            },
+            divider:{
+                margin:'.7rem auto 0 auto',width:"80%",height:"1px"
             }
     }
 })

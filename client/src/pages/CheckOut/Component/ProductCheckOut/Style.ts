@@ -2,11 +2,11 @@ import { makeStyles } from "tss-react/mui"
 
 const useStyles = makeStyles() ((theme) =>{
     return{
+
         listBillBox :{
             margin :"1.5rem 1rem",
             display :"flex",
             flexDirection :"column",
-            // width :"100%",
             gap :".7rem",
             [theme.breakpoints.up('sm')]:{
               margin :"1.5rem 1.7rem",
@@ -65,6 +65,10 @@ const useStyles = makeStyles() ((theme) =>{
               margin :".2rem 1.7rem",
               marginTop:".7rem",
             }
+          },
+          cardContainer:{
+            maxHeight:"40rem",
+            overflow:"auto"
           }
     }
 })

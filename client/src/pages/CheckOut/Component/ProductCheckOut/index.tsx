@@ -6,14 +6,14 @@ import useStyles from './Style';
 
 function ProductCheckOut() {
     const {classes} = useStyles()
-    const {data,loading} = useFetchProductCart()
+    const {data} = useFetchProductCart()
     const carts = data?.GetProductInCart   
-    let price =  carts ? carts.map((cart) => cart.price * cart.amount) : []
+    let price =  carts ? carts.map((cart) => cart.amount * cart.product.price ) :[]
     let cartTotal = price.length !== 0 ? price.reduce((accumulator,currentValue) =>{
         return accumulator + currentValue
     },0 ) : 0
   return (
-    <Box>
+    <Box >
         {
             carts &&
             carts.length <= 0 ?(
@@ -23,11 +23,11 @@ function ProductCheckOut() {
             ):(
                 <>
                 <Typography className={classes.summary} >Summary</Typography>
-                    <Box > 
+                    <Box className={classes.cardContainer}> 
                         {
                         carts && carts.map((cart) =>{
                             return(
-                                < ProductCheckOutCard image={cart.imageUrl} price={cart.price} productCount={cart.amount} productName={cart.name} id={cart.productId}/>   
+                                < ProductCheckOutCard image={cart.product.image[0].url} price={cart.product.price} productCount={cart.amount} productName={cart.product.name} id={cart.productId} key={cart.productId} description={cart.description}/>   
                             )
                         } )  
                         }
@@ -40,8 +40,8 @@ function ProductCheckOut() {
                             return(
 
                         <Box className={classes.listBill} > 
-                            <Typography className={classes.nameBillProduct}  >  {cart.name} <span style={{marginLeft:".3rem"}}>{cart.amount}x</span>  </Typography>
-                            <Typography className={classes.priceBillProduct} > ${cart.price * cart.amount} </Typography>
+                            <Typography className={classes.nameBillProduct}  >  {cart.product.name} <span style={{marginLeft:".3rem"}}>{cart.amount}x</span>  </Typography>
+                            <Typography className={classes.priceBillProduct} > ${cart.product.price * cart.amount} </Typography>
                         </Box>
 
                             )

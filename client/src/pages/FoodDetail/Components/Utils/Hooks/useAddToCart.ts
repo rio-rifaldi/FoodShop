@@ -14,10 +14,11 @@ const useAddToCart = (productId : string ) => {
     ]
   })
   const setCart = useSetRecoilState(shopCart) 
-   const AddToCart =  () =>{ 
+   const AddToCart =  (description:string) =>{ 
      addToCart({
         variables : {
-            productId
+            productId,
+            description
         }
     })
     .then((result) =>{
